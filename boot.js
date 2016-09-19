@@ -23,7 +23,7 @@
     }
 
     (function start() {
-
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Avoids DEPTH_ZERO_SELF_SIGNED_CERT error for self-signed certs
         if (fs.existsSync('.env.json')) {//eslint-disable-line no-sync
             require('dot-env');
         }

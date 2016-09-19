@@ -1,11 +1,11 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const CONFIG = require('../../config').get(),
-        responder = require('../common/responder'),
-        moment = require('moment');
+const CONFIG = require('../../config').get(),
+    responder = require('../common/responder'),
+    moment = require('moment');
 
-    function check(response) {
+module.exports = new class Health {
+    check(response) {
         responder.send(response, {
             status: 200,
             data: {
@@ -15,9 +15,4 @@
             }
         });
     }
-
-    module.exports = {
-        check: check
-    };
-
-}());
+};

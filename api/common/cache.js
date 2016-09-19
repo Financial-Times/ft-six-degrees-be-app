@@ -1,26 +1,24 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const moment = require('moment'),
-        storage = {
+const moment = require('moment');
+
+module.exports = new class Cache {
+    constructor() {
+        this.storage = {
             people: {},
             connections: {},
             users: {}
         };
+    }
 
-    function handle(id) {
-        if (!storage[id].start) {
-            storage[id].start = moment();
+    handle(id) {
+        if (!this.storage[id].start) {
+            this.storage[id].start = moment();
         } else {
-            if (moment().isAfter(storage[id].start, 'day')) {
-                storage[id] = {};
+            if (moment().isAfter(this.storage[id].start, 'day')) {
+                this.storage[id] = {};
             }
         }
     }
+};
 
-    module.exports = {
-        storage: storage,
-        handle: handle
-    };
-
-}());

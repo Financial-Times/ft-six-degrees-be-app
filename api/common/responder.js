@@ -1,28 +1,34 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const CONFIG = require('../../config').get(),
-        winston = require('../../winston-logger'),
-        badRequestParams = {
+const CONFIG = require('../../config').get(),
+    winston = require('../../winston-logger');
+
+module.exports = new class Responder {
+
+    constructor() {
+        this.badRequestParams = {
             'status': 400,
             'error': 'Bad request',
             'type': 'text/plain'
-        },
-        badGatewayParams = {
+        };
+
+        this.badGatewayParams = {
             status: 502,
             error: 'bad gateway'
-        },
-        unauthorizedRequestParams = {
+        };
+
+        this.unauthorizedRequestParams = {
             'status': 401,
             'error': 'Unauthorized',
             'type': 'text/plain'
         };
+    }
 
-    function send(response, params, nolog) {
+    send(response, params, nolog) {
         if (response) {
             if (params.status === 200) {
                 if (!nolog) {
-                    winston.logger.info('Request \'' + (params.description ? params.description + '\' ' : '') + 'successful. Sending JSON response to client.' + (CONFIG.SETTINGS.LOGGER.LEVEL === 'all' ? JSON.stringify(params.data) : ''));
+                    winston.logger.info('Request ' + (params.description ? '\'' + params.description + '\' ' : '') + 'successful. Sending JSON response to client.' + (CONFIG.SETTINGS.LOGGER.LEVEL === 'all' ? JSON.stringify(params.data) : ''));
                 }
                 response.json(params.data);
             } else {
@@ -37,22 +43,16 @@
         }
     }
 
-    function reject(response) {
-        send(response, badRequestParams);
+    reject(response) {
+        this.send(response, this.badRequestParams);
     }
 
-    function rejectBadGateway(response) {
-        send(response, badGatewayParams);
+    rejectBadGateway(response) {
+        this.send(response, this.badGatewayParams);
     }
 
-    function rejectUnauthorized(response) {
-        send(response, unauthorizedRequestParams);
+    rejectUnauthorized(response) {
+        this.send(response, this.unauthorizedRequestParams);
     }
 
-    module.exports = {
-        send: send,
-        reject: reject,
-        rejectUnauthorized: rejectUnauthorized,
-        rejectBadGateway: rejectBadGateway
-    };
-}());
+};
