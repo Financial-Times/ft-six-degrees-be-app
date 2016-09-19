@@ -1,0 +1,29 @@
+{
+  "name": "ft-six-degrees-be-app",
+  "version": "0.0.1",
+  "description": "FT Six Degrees BE Proxy App",
+  "author": "Tomasz Libich <tomasz.libich@ft.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/ft-six-degrees-be-app.git"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "body-parser": "*",
+    "dot-env": "*",
+    "express": "*",
+    "fs-extra": "*",
+    "moment": "*",
+    "promise": "*",
+    "q": "*",
+    "request": "*",
+    "util": "*",
+    "winston": "*"
+  },
+  "scripts": {
+    "start": "node start"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/react-scripts/config/eslint.js"
+  }
+}
