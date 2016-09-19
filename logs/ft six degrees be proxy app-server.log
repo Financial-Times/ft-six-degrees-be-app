@@ -13,3 +13,37 @@
 {"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T12:48:26.816Z"}
 {"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T12:48:51.421Z"}
 {"level":"info","message":"[boot] API GET Test request detected, handling.","timestamp":"2016-09-19T12:49:13.106Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T12:59:50.660Z"}
+{"level":"info","message":"[boot] API GET Test request detected, handling.","timestamp":"2016-09-19T13:00:01.669Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:01:56.012Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:02:12.314Z"}
+{"level":"error","message":"Error, sending text response to client: Bad request","timestamp":"2016-09-19T13:02:12.317Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:02:34.050Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:02:36.550Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:04:55.932Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:05:12.838Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:05:17.979Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:06:38.757Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:06:42.859Z"}
+{"level":"info","message":"Request 'successful. Sending JSON response to client.","timestamp":"2016-09-19T13:06:42.860Z"}
+{"level":"info","message":"API GET /test2/","timestamp":"2016-09-19T13:06:52.580Z"}
+{"level":"error","message":"Error, sending text response to client: Bad request","timestamp":"2016-09-19T13:06:52.581Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:06:55.865Z"}
+{"level":"info","message":"Request 'successful. Sending JSON response to client.","timestamp":"2016-09-19T13:06:55.865Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:08:27.063Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:08:30.867Z"}
+{"level":"error","message":"Error, sending text response to client: Bad request","timestamp":"2016-09-19T13:08:30.869Z"}
+{"level":"info","message":"API GET /health/","timestamp":"2016-09-19T13:08:34.988Z"}
+{"level":"info","message":"Request 'successful. Sending JSON response to client.","timestamp":"2016-09-19T13:08:34.988Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:10:01.759Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:10:01.760Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:13:52.165Z"}
+{"level":"info","message":"API GET /health/","timestamp":"2016-09-19T13:13:54.829Z"}
+{"level":"info","message":"Request 'successful. Sending JSON response to client.","timestamp":"2016-09-19T13:13:54.829Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:14:16.469Z"}
+{"level":"info","message":"API GET /test/","timestamp":"2016-09-19T13:14:28.205Z"}
+{"level":"error","message":"Error, sending text response to client: Bad request","timestamp":"2016-09-19T13:14:28.206Z"}
+{"level":"info","message":"API GET /health/","timestamp":"2016-09-19T13:14:34.229Z"}
+{"level":"info","message":"Request 'successful. Sending JSON response to client.","timestamp":"2016-09-19T13:14:34.230Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:14:56.292Z"}
+{"level":"info","message":"[boot] Running server on port 8080...","timestamp":"2016-09-19T13:15:27.094Z"}

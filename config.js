@@ -25,6 +25,14 @@
                 '.otf': 'font/otf',
                 '.woff': 'font/woff',
                 '.map': 'application/octet-stream'
+            },
+            SETTINGS: {
+                LOGGER: {
+                    LEVEL: 'api'
+                },
+                RETRY: {
+                    MAX_ATTEMPTS: 20
+                }
             }
         },
         cmdArgs = [''];

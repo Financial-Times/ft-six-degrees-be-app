@@ -21,7 +21,7 @@
     "winston": "*"
   },
   "scripts": {
-    "start": "node start"
+    "start": "node boot"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"

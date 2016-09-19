@@ -3,11 +3,13 @@
 
     const express = require('express'),
         bodyParser = require('body-parser'),
+        fs = require('fs-extra'),
         //authS3O = require('s3o-middleware'),
         handlerFor404 = require('./404'),
         config = require('./config'),
         winston = require('./winston-logger'),
         cors = require('./cors'),
+        API = require('./api'),
         CONFIG = config.get(),
         app = express(),
         server = require('http').createServer(app);
@@ -18,11 +20,13 @@
         app.use(bodyParser.urlencoded({
             extended: false
         }));
-        console.warn('aa', CONFIG.APP_PATH);
-        app.use('/', express.static(CONFIG.APP_PATH));
     }
 
-    function start() {
+    (function start() {
+
+        if (fs.existsSync('.env.json')) {//eslint-disable-line no-sync
+            require('dot-env');
+        }
 
         initializeApp();
 
@@ -30,16 +34,15 @@
             winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
         });
 
-        app.get('/api/test', function (request, response) {
-            winston.logger.info('[boot] API GET Test request detected, handling.');
-            response.json({});
+        app.get('/api/*', function (request, response) {
+            API.handleGet(request, response);
+        });
+
+        app.post('/api/*', function (request, response) {
+            API.handlePost(request, response);
         });
 
         app.use(handlerFor404);
-    }
-
-    module.exports = {
-        start: start
-    };
+    } ());
 
 }());
