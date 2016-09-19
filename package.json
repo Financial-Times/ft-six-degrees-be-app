@@ -18,6 +18,7 @@
     "q": "*",
     "request": "*",
     "util": "*",
+    "vows": "^0.8.1",
     "winston": "*"
   },
   "scripts": {

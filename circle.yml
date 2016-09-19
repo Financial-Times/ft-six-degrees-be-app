@@ -7,13 +7,13 @@ machine:
 
 checkout:
   post:
-    #- chmod +x ./scripts/ci/configure_github.sh
-    #- ./scripts/ci/configure_github.sh
+    - chmod +x ./_scripts/push_to_staging.sh
+    - chmod +x ./_scripts/run_tests.sh
 
 ## Customize test commands
 test:
   override:
-    #- sh ./scripts/ci/run_tests.sh
+    - sh ./_scripts/run_tests.sh
 
 ## Customize deployment
 deployment:
