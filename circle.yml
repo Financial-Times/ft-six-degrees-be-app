@@ -1,0 +1,23 @@
+## Customize the test machine
+machine:
+  environment:
+    CI: true
+  node:
+    version: 5.11.0
+
+checkout:
+  post:
+    #- chmod +x ./scripts/ci/configure_github.sh
+    #- ./scripts/ci/configure_github.sh
+
+## Customize test commands
+test:
+  override:
+    #- sh ./scripts/ci/run_tests.sh
+
+## Customize deployment
+deployment:
+  develop:
+    branch: develop
+    commands:
+      - sh ./_scripts/push_to_staging.sh
