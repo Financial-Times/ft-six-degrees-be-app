@@ -5,13 +5,13 @@ const CONFIG = require('../../config').get(),
     moment = require('moment');
 
 module.exports = new class Health {
-    check(response) {
+    check(response, timestamp) {
         responder.send(response, {
             status: 200,
             data: {
                 name: CONFIG.APP,
                 active: true,
-                time: moment()
+                time: timestamp || moment().format()
             }
         });
     }

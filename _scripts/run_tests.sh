@@ -1,1 +1,1 @@
-./node_modules/mocha/bin/mocha
+TEST=true ./node_modules/mocha/bin/mocha

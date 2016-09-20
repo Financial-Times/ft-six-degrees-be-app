@@ -10,7 +10,7 @@
 
         if (params.length && params[0] !== '') {
 
-            if (params[0] !== 'monitor' && params[0] !== 'logs') {
+            if (!process.env.TEST) {
                 winston.logger.info('API GET /' + params[0] + '/' + (request.query && JSON.stringify(request.query) !== '{}' ? JSON.stringify(request.query) : ''));
             }
 
@@ -32,7 +32,9 @@
         const route = clientRequest.url.replace('/api/', ''),
             headers = clientRequest.headers;
 
-        winston.logger.info('API POST request detected. Route: ' + route);
+        if (!process.env.TEST) {
+            winston.logger.info('API POST request detected. Route: ' + route);
+        }
 
         switch (route) {
         case 'test': (function () {
