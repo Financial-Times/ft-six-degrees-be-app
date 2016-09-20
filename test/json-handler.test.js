@@ -1,17 +1,20 @@
-const JsonHandler = require('../api/common/json-handler');
+const expect = require('chai').expect,
+    JsonHandler = require('../api/common/json-handler');
 
-module.exports = (vows, assert) => {
-    vows.describe('JsonHandler').addBatch({
-        'parses input and': {
-            'returns Json object if correct string has been provided': function () {
-                const parsed = JsonHandler.parse('{}', true);
-                assert.equal(JSON.stringify(parsed), JSON.stringify({}));
-            },
-            'returns null if incorrect string has been provided': function () {
-                const parsed = JsonHandler.parse('{xyz}', true);
-                assert.equal(parsed, null);
-            }
-        }
-    }).run();
-};
+describe('JsonHandler', function () {
+    describe('parses input and', function () {
+
+        it('should return json object if correct string has been provided', function () {
+            const parsed = JsonHandler.parse('{}', true);
+            expect(JSON.stringify(parsed)).to.equal(JSON.stringify({}));
+        });
+
+        it('should return null if incorrect string has been provided', function () {
+            const parsed = JsonHandler.parse('{xyz}', true);
+            expect(parsed).to.equal(null);
+        });
+
+    });
+});
+
 

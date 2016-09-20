@@ -1,11 +1,12 @@
-const CONFIG = require('../config').get();
+const CONFIG = require('../config').get(),
+    expect = require('chai').expect;
 
-module.exports = (vows, assert) => {
-    vows.describe('CONFIG').addBatch({
-        'points at local machine': {
-            'returns local IP': function () {
-                assert.equal(CONFIG.URL, '127.0.0.1');
-            }
-        }
-    }).run();
-};
+describe('CONFIG', function () {
+    describe('points at local machine', function () {
+
+        it('should return local IP', function () {
+            expect(CONFIG.URL).to.equal('127.0.0.1');
+        });
+
+    });
+});

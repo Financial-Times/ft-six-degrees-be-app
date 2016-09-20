@@ -7,7 +7,10 @@
     "type": "git",
     "url": "https://git.heroku.com/ft-six-degrees-be-app.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2"
+  },
   "dependencies": {
     "body-parser": "*",
     "dot-env": "*",
@@ -18,7 +21,6 @@
     "q": "*",
     "request": "*",
     "util": "*",
-    "vows": "^0.8.1",
     "winston": "*"
   },
   "scripts": {

@@ -6,7 +6,8 @@
         "amd": true,
         "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "rules": {
         "block-scoped-var": 2,
@@ -126,6 +127,9 @@
         "react"
     ],
     "globals": {
-        "moment": true
+        "moment": true,
+        "describe": true,
+        "it": true,
+        "assert": true
     }
 }
