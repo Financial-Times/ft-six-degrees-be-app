@@ -2,7 +2,7 @@ const expect = require('chai').expect,
     sinon = require('sinon'),
     Api = require('../api'),
     responder = require('../api/common/responder'),
-    apiInterfaceMethods = ['handleGet', 'handlePost'];
+    apiInterfaceMethods = ['handle'];
 
 describe('API', function () {
 
@@ -30,13 +30,13 @@ describe('API', function () {
             });
 
             it ('rejects requests with no route provided', function () {
-                Api.handleGet({
+                Api.handle({
                     url: '/api/'
                 });
             });
 
             it ('rejects requests with unrecognized routes', function () {
-                Api.handleGet({
+                Api.handle({
                     url: '/api/xyz'
                 });
             });

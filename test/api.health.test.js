@@ -23,7 +23,7 @@ describe('API Health', function () {
             expect(responseData).to.eql(responseDataMock);
         });
 
-        Health.check(responseMock);
+        Health.check({}, responseMock);
 
         sinon.assert.calledOnce(responder.send);
         sinon.assert.calledWith(responder.send, responseMock, responseDataMock);

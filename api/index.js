@@ -12,7 +12,7 @@ const responder = require('../api/common/responder'),
 
 module.exports = new class Api {
     handle(request, response) {
-        const command = request.params.command,
+        const command = request.params ? request.params.command : undefined,
             isApiRoute = request.url.indexOf('/api/') !== -1,
             requestMethod = request.method,
             routes = apiRoutes[requestMethod];
