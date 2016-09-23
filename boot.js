@@ -34,13 +34,7 @@
             winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
         });
 
-        app.get('/api/*', function (request, response) {
-            API.handleGet(request, response);
-        });
-
-        app.post('/api/*', function (request, response) {
-            API.handlePost(request, response);
-        });
+        app.all('/api/:command', API.handle);
 
         app.use(handlerFor404);
     } ());

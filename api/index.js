@@ -1,56 +1,36 @@
-(function () {
-    'use strict';
+'use strict';
 
-    const responder = require('../api/common/responder'),
-        Health = require('../api/health'),
-        winston = require('../winston-logger');
+const responder = require('../api/common/responder'),
+    Health = require('../api/health'),
+    winston = require('../winston-logger'),
+    apiRoutes = {
+        GET: {
+            'health': Health.check
+        },
+        POST: {}
+    };
 
-    function handleGet(request, response) {
-        const params = request.url.replace('/api/', '').split('/');
+module.exports = new class Api {
+    handle(request, response) {
+        const command = request.params.command,
+            isApiRoute = request.url.indexOf('/api/') !== -1,
+            requestMethod = request.method,
+            routes = apiRoutes[requestMethod];
 
-        if (params.length && params[0] !== '') {
+        if (isApiRoute && command) {
 
             if (!process.env.TEST) {
-                winston.logger.info('API GET /' + params[0] + '/' + (request.query && JSON.stringify(request.query) !== '{}' ? JSON.stringify(request.query) : ''));
+                winston.logger.info('API ' + requestMethod + ' request detected. Route: /' + command + '/');
             }
 
-            switch (params[0]) {
-            case 'health':
-                Health.check(response);
-                break;
-            default:
+            if (routes[command]) {
+                routes[command](request, response);
+            } else {
                 responder.reject(response);
-                break;
             }
 
         } else {
             responder.reject(response);
         }
     }
-
-    function handlePost(clientRequest, clientResponse) {
-        const route = clientRequest.url.replace('/api/', ''),
-            headers = clientRequest.headers;
-
-        if (!process.env.TEST) {
-            winston.logger.info('API POST request detected. Route: ' + route);
-        }
-
-        switch (route) {
-        case 'test': (function () {
-            return;
-        }());
-            break;
-        default: (function () {
-            responder.reject(clientResponse);
-        }());
-            break;
-        }
-
-    }
-
-    module.exports = {
-        handleGet: handleGet,
-        handlePost: handlePost
-    };
-}());
+};

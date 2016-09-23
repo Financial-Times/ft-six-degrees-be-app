@@ -5,7 +5,7 @@ const CONFIG = require('../../config').get(),
     moment = require('moment');
 
 module.exports = new class Health {
-    check(response, timestamp) {
+    check(request, response, timestamp) {
         responder.send(response, {
             status: 200,
             data: {
