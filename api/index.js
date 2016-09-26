@@ -2,10 +2,11 @@
 
 const responder = require('../api/common/responder'),
     Health = require('../api/health'),
+    Test = require('../api/test'),
     winston = require('../winston-logger'),
     apiRoutes = {
         GET: {
-            'health': Health.check
+            'test': Test.check
         },
         POST: {}
     };
@@ -20,7 +21,7 @@ module.exports = new class Api {
         if (isApiRoute && command) {
 
             if (!process.env.TEST) {
-                winston.logger.info('API ' + requestMethod + ' request detected. Route: /' + command + '/');
+                winston.logger.info('[api] API ' + requestMethod + ' request detected. Route: /' + command + '/');
             }
 
             if (routes[command]) {
@@ -32,5 +33,9 @@ module.exports = new class Api {
         } else {
             responder.reject(response);
         }
+    }
+
+    healthcheck(request, response) {
+        Health.check(request, response);
     }
 };

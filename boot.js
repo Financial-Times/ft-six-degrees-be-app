@@ -35,6 +35,7 @@
         });
 
         app.all('/api/:command', API.handle);
+        app.get('/__health', API.healthcheck);
 
         app.use(handlerFor404);
     } ());

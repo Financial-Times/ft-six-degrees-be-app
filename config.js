@@ -3,10 +3,12 @@
 
     let CONFIG_INSTANCE;
 
-    const CONFIG = {
+    const PACKAGE_JSON = require('./package.json'),
+        CONFIG = {
             URL: '127.0.0.1',
             PORT: process.env.PORT || 8080,
-            APP: 'FT Six Degrees BE Proxy App',
+            SYSTEM_CODE: PACKAGE_JSON.name,
+            DESCRIPTION: PACKAGE_JSON.description,
             VER: process.env.APP_VERSION,
             APP_PATH: process.env.APP_PATH,
             EXTENSIONS: {

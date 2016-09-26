@@ -3,9 +3,9 @@ const expect = require('chai').expect,
     moment = require('moment'),
     CONFIG = require('../config').get(),
     responder = require('../api/common/responder'),
-    Health = require('../api/health');
+    Test = require('../api/test');
 
-describe('API Health', function () {
+describe('API Test', function () {
 
     it('sends healthy response to client', function () {
         const timestamp = moment().format(),
@@ -13,8 +13,7 @@ describe('API Health', function () {
             responseDataMock = {
                 status: 200,
                 data: {
-                    name: CONFIG.APP,
-                    active: true,
+                    name: CONFIG.DESCRIPTION,
                     time: timestamp
                 }
             };
@@ -23,7 +22,7 @@ describe('API Health', function () {
             expect(responseData).to.eql(responseDataMock);
         });
 
-        Health.check({}, responseMock);
+        Test.check({}, responseMock);
 
         sinon.assert.calledOnce(responder.send);
         sinon.assert.calledWith(responder.send, responseMock, responseDataMock);

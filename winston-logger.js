@@ -30,25 +30,25 @@
                 new (winston.transports.File)({
                     name: 'file.all',
                     maxsize: 10485760,
-                    filename: './logs/' + CONFIG.APP.toLowerCase() + '-server.log' //log everything to the server.log
+                    filename: './logs/' + CONFIG.DESCRIPTION.toLowerCase().replace(/\s/g, '-') + '-server.log' //log everything to the server.log
                 }),
                 new (winston.transports.File)({
                     name: 'file.error',
                     maxsize: 10485760,
                     level: 'error',
-                    filename: './logs/' + CONFIG.APP.toLowerCase() + '-error.log', //log errors and exceptions to the error.log
+                    filename: './logs/' + CONFIG.DESCRIPTION.toLowerCase().replace(/\s/g, '-') + '-error.log', //log errors and exceptions to the error.log
                     handleExceptions: true
                 }),
                 new (winston.transports.File)({
                     name: 'file.warn',
                     maxsize: 10485760,
                     level: 'warn',
-                    filename: './logs/' + CONFIG.APP.toLowerCase() + '-warn.log' //log warn to the warn.log
+                    filename: './logs/' + CONFIG.DESCRIPTION.toLowerCase().replace(/\s/g, '-') + '-warn.log' //log warn to the warn.log
                 }),
                 new (winston.transports.File)({
                     name: 'file.info',
                     level: 'info',
-                    filename: './logs/' + CONFIG.APP.toLowerCase() + '-info.log' //log info to the info.log
+                    filename: './logs/' + CONFIG.DESCRIPTION.toLowerCase().replace(/\s/g, '-') + '-info.log' //log info to the info.log
                 })
             ]
         });
