@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "node boot",
-    "test": "node test/*.*"
+    "test": "./_scripts/run_tests.sh"
   },
   "eslintConfig": {
     "extends": "./node_modules/react-scripts/config/eslint.js"

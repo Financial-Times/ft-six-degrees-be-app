@@ -15,14 +15,15 @@ const CONFIG = require('../../config').get(),
     HEALTH_DATA = {
         'schemaVersion': 1,
         'systemCode': CONFIG.SYSTEM_CODE,
-        'name': CONFIG.APP,
+        'name': CONFIG.SYSTEM_CODE,
         'description': CONFIG.DESCRIPTION
     },
     request = require('request'),
     moment = require('moment'),
     winston = require('../../winston-logger'),
-    readFiles = require('../../utils/read-files'),
-    configs = {},
+    readFiles = require('../../utils/read-files');
+
+let configs = {},
     results = {};
 
 function getCheckSummary(id, result, output) {
@@ -76,7 +77,7 @@ function getChecks() {
         winston.logger.error('[api-health] Error on attempt to read healthcheck configs from check folder! ' + error);
     });
 
-    if (!MODULE_CONFIG.CHECKS_IN_PROGRESS) {
+    if (!MODULE_CONFIG.CHECKS_IN_PROGRESS && process.env.TEST !== true) {
         MODULE_CONFIG.CHECKS_IN_PROGRESS = true;
         setInterval(function () {
             let filename;
@@ -93,9 +94,14 @@ function getChecks() {
 
 module.exports = new class Health {
 
+    prime(stubConfigs, stubResults) {
+        configs = stubConfigs;
+        results = stubResults;
+    }
+
     check(req, response, timestamp) {
 
-        const requestTime = timestamp || moment().utc(),
+        const requestTime = timestamp || moment().utc().format(),
             data = Object.assign({}, HEALTH_DATA, {
                 checks: getChecks(),
                 requestTime: requestTime,
