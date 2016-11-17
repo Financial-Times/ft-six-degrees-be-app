@@ -1,7 +1,7 @@
 const expect = require('chai').expect,
     sinon = require('sinon'),
     moment = require('moment'),
-    CONFIG = require('../config').get(),
+    CONFIG = require('../config'),
     responder = require('../api/common/responder'),
     Test = require('../api/test');
 

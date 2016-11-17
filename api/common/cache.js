@@ -2,7 +2,7 @@
 
 const moment = require('moment');
 
-module.exports = new class Cache {
+class Cache {
     constructor() {
         this.storage = {
             people: {},
@@ -30,5 +30,6 @@ module.exports = new class Cache {
 
         return storage;
     }
-};
+}
 
+module.exports = new Cache();

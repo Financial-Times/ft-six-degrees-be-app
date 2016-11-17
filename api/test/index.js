@@ -1,6 +1,6 @@
 'use strict';
 
-const CONFIG = require('../../config').get(),
+const CONFIG = require('../../config'),
     responder = require('../common/responder'),
     moment = require('moment');
 

@@ -1,5 +1,5 @@
 const expect = require('chai').expect,
-    JsonHandler = require('../api/common/json-handler');
+    JsonHandler = require('../utils/json-handler');
 
 function parse(string) {
     return JsonHandler.parse(string, true);

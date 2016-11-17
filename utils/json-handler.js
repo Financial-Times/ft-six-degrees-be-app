@@ -1,8 +1,8 @@
 'use strict';
 
-const winston = require('../../winston-logger');
+const winston = require('../winston-logger');
 
-module.exports = new class JsonHandler {
+class JsonHandler {
 
     parse(body, nolog) {
         let bodyParsed = null;
@@ -11,11 +11,13 @@ module.exports = new class JsonHandler {
             bodyParsed = JSON.parse(body);
         } catch (err) {
             if (!nolog) {
-                winston.logger.error('Response body parser error:\n', err);
+                winston.logger.error('[utils-json-parser] JSON parser error:\n' + err);
             }
         }
 
         return bodyParsed;
     }
-};
+}
+
+module.exports = new JsonHandler();
 

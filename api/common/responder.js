@@ -1,9 +1,8 @@
 'use strict';
 
-const CONFIG = require('../../config').get(),
-    winston = require('../../winston-logger');
+const winston = require('../../winston-logger');
 
-module.exports = new class Responder {
+class Responder {
 
     constructor() {
         this.badRequestParams = {
@@ -28,7 +27,7 @@ module.exports = new class Responder {
         if (response) {
             if (params.status === 200) {
                 if (!nolog) {
-                    winston.logger.info('Request ' + (params.description ? '\'' + params.description + '\' ' : '') + 'successful. Sending JSON response to client.' + (CONFIG.SETTINGS.LOGGER.LEVEL === 'all' ? JSON.stringify(params.data) : ''));
+                    winston.logger.info('Request ' + (params.description ? '\'' + params.description + '\' ' : '') + 'successful. Sending JSON response to client.');
                 }
                 response.json(params.data);
             } else {
@@ -55,4 +54,6 @@ module.exports = new class Responder {
         this.send(response, this.unauthorizedRequestParams);
     }
 
-};
+}
+
+module.exports = new Responder();

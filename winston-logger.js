@@ -10,7 +10,7 @@
         }
     }());
 
-    const CONFIG = require('./config').get(),
+    const CONFIG = require('./config'),
         moment = require('moment'),
         winston = require('winston'),
         logger = new (winston.Logger)({

@@ -3,15 +3,17 @@
 const responder = require('../api/common/responder'),
     Health = require('../api/health'),
     Test = require('../api/test'),
+    MentionedPeople = require('../api/mentioned-people'),
     winston = require('../winston-logger'),
     apiRoutes = {
         GET: {
+            'mentioned': MentionedPeople.get,
             'test': Test.check
         },
         POST: {}
     };
 
-module.exports = new class Api {
+class Api {
     handle(request, response) {
         const command = request.params ? request.params.command : undefined,
             isApiRoute = request.url.indexOf('/api/') !== -1,
@@ -38,4 +40,6 @@ module.exports = new class Api {
     healthcheck(request, response) {
         Health.check(request, response);
     }
-};
+}
+
+module.exports = new Api();

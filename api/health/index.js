@@ -1,6 +1,6 @@
 'use strict';
 
-const CONFIG = require('../../config').get(),
+const CONFIG = require('../../config'),
     MODULE_CONFIG = {
         CHECKS_TIMEOUT: 30000,
         CHECKS_IN_PROGRESS: false
