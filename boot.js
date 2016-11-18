@@ -8,7 +8,7 @@
     const express = require('express'),
         CONFIG = require('./config'),
         //handlerFor404 = require('./config/404'),
-        winston = require('../winston-logger'),
+        winston = require('./winston-logger'),
         app = express();
 
     app.listen(CONFIG.PORT, function () {
