@@ -1,5 +1,7 @@
 'use strict';
 
+console.log('IN PEOPLE ARTICLES STORAGE');
+
 const winston = require('../winston-logger');
 
 class PeopleArticlesStorage {
