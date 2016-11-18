@@ -6,9 +6,9 @@ const request = require('request'),
 
 function getArticles(person) {
     return new Promise(function (resolve, reject) {
-        request('https://api.ft.com/content?isAnnotatedBy=' + person.id, {
+        request(process.env.FT_API_URL + 'content?isAnnotatedBy=' + person.id, {
             headers: {
-                'x-api-key': 'vg9u6GResCWNIwqGCdNZVaL7RdEOCtGo'
+                'x-api-key': process.env.FT_API_KEY
             }
         }, function (error, response, content) {
             if (error) {

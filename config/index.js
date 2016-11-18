@@ -5,7 +5,7 @@ const PACKAGE_JSON = require('../package.json');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Avoids DEPTH_ZERO_SELF_SIGNED_CERT error for self-signed certs
 
 module.exports = {
-    PORT: parseInt(process.env.PORT || 8080, 10),
+    PORT: process.env.PORT || 8080,
     SYSTEM_CODE: PACKAGE_JSON.name,
     DESCRIPTION: PACKAGE_JSON.description,
     VER: process.env.APP_VERSION,
