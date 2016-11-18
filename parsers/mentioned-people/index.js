@@ -36,4 +36,6 @@ class MentionedPeopleParser {
     }
 }
 
+console.log('IN MENTIONED PEOPLE PARSER2');
+
 module.exports = new MentionedPeopleParser();
