@@ -9,7 +9,7 @@
         CONFIG = require('./config'),
         handlerFor404 = require('./middlewares/404'),
         middlewares = require('./middlewares'),
-        winston = require('../winston-logger'),
+        winston = require('./winston-logger'),
         //Api = require('./api'),
         //Poller = require('./poller'),
         app = express();
