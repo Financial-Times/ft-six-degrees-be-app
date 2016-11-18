@@ -1,5 +1,7 @@
 'use strict';
 
+console.log('IN MENTIONED PEOPLE PARSER');
+
 const mentionedPeopleImagesParser = require('./images'),
     mentionedPeopleArticlesParser = require('./articles');
 
