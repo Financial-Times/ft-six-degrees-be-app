@@ -18,7 +18,7 @@
     //app.all('/api/:command/:key', Api.handle);
     //app.get('/__health', Api.healthcheck);
 
-    Poller.init();
+    //Poller.init();
 
     app.use(handlerFor404);
 
