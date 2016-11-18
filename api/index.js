@@ -1,6 +1,6 @@
 'use strict';
 
-const responder = require('../api/common/responder'),
+const responder = require('./common/responder'),
     //Health = require('../api/health'),
     //Test = require('../api/test'),
     MentionedPeople = require('./mentioned-people'),

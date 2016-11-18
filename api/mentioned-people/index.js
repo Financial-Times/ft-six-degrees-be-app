@@ -1,5 +1,5 @@
 'use strict';
-
+console.log('IN');
 const responder = require('../common/responder'),
     CONFIG = require('../../config'),
     winston = require('../../winston-logger'),
