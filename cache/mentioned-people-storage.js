@@ -3,8 +3,8 @@ console.log('IN PEOPLE STORAGE');
 const moment = require('moment'),
     winston = require('../winston-logger'),
     jsonHandler = require('../utils/json-handler'),
-    mentionedPeopleParser = require('../parsers/mentioned-people/');
-    //peopleArticlesStorage = require('./people-articles-storage'),
+    mentionedPeopleParser = require('../parsers/mentioned-people/'),
+    peopleArticlesStorage = require('./people-articles-storage');
     //datesHandler = require('../utils/dates-handler');
 console.log('IN PEOPLE STORAGE2');
 class MentionedPeopleStorage {
