@@ -7,17 +7,21 @@
 
     const express = require('express'),
         CONFIG = require('./config'),
-        handlerFor404 = require('./middlewares/404'),
-        middlewares = require('./middlewares'),
-        winston = require('./winston-logger'),
-        //Api = require('./api'),
-        //Poller = require('./poller'),
         app = express();
 
     app.listen(CONFIG.PORT, function () {
+
+        const handlerFor404 = require('./middlewares/404'),
+            middlewares = require('./middlewares'),
+            //Api = require('./api'),
+            Poller = require('./poller'),
+            winston = require('./winston-logger');
+
         winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
         middlewares.configure(app);
         app.use(handlerFor404);
+
+        Poller.init();
     });
 
 
