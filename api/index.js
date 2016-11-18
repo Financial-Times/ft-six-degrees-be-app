@@ -1,7 +1,7 @@
 'use strict';
 
 const responder = require('../api/common/responder'),
-    Health = require('../api/health'),
+    //Health = require('../api/health'),
     Test = require('../api/test'),
     MentionedPeople = require('../api/mentioned-people'),
     winston = require('../winston-logger'),
@@ -38,7 +38,7 @@ class Api {
     }
 
     healthcheck(request, response) {
-        Health.check(request, response);
+        //Health.check(request, response);
     }
 }
 
