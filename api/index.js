@@ -3,11 +3,11 @@
 const responder = require('../api/common/responder'),
     //Health = require('../api/health'),
     //Test = require('../api/test'),
-    //MentionedPeople = require('../api/mentioned-people'),
+    MentionedPeople = require('../api/mentioned-people'),
     winston = require('../winston-logger'),
     apiRoutes = {
         GET: {
-            //'mentioned': MentionedPeople.get,
+            'mentioned': MentionedPeople.get
             //'test': Test.check
         },
         POST: {}
