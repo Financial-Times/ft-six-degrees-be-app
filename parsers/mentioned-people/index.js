@@ -3,8 +3,6 @@
 const mentionedPeopleImagesParser = require('./images'),
     mentionedPeopleArticlesParser = require('./articles');
 
-console.log('IN MENTIONED PEOPLE PARSER');
-
 function getNameInitials(prefLabel) {
     const initials = prefLabel.match(/\b\w/g) || [];
     return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();

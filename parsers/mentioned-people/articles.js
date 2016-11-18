@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('IN ARTICLES');
-
 const request = require('request'),
     winston = require('../../winston-logger'),
     peopleArticlesStorage = require('../../cache/people-articles-storage');
