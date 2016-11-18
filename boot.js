@@ -17,6 +17,7 @@
     app.listen(CONFIG.PORT, function () {
         winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
         middlewares.configure(app);
+        app.use(handlerFor404);
     });
 
 
@@ -27,6 +28,6 @@
 
     //Poller.init();
 
-    app.use(handlerFor404);
+
 
 }());
