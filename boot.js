@@ -9,7 +9,7 @@ const app = require('express')(),
     handlerFor404 = require('./middlewares/404'),
     middlewares = require('./middlewares'),
     Api = require('./api'),
-    //Poller = require('./poller'),
+    Poller = require('./poller'),
     winston = require('./winston-logger');
 
 app.listen(CONFIG.PORT, function () {
@@ -19,13 +19,11 @@ app.listen(CONFIG.PORT, function () {
 middlewares.configure(app);
 app.use(handlerFor404);
 
-//Poller.init();
+app.all('/api/:command', Api.handle);
+app.all('/api/:command/:key', Api.handle);
+app.get('/__health', Api.healthcheck);
 
-//app.all('/api/:command', Api.handle);
-//app.all('/api/:command/:key', Api.handle);
-//app.get('/__health', Api.healthcheck);
-
-//Poller.init();
+Poller.init();
 
 
 

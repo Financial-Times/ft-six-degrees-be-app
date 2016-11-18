@@ -77,18 +77,18 @@ function getChecks() {
         winston.logger.error('[api-health] Error on attempt to read healthcheck configs from check folder! ' + error);
     });
 
-    // if (!MODULE_CONFIG.CHECKS_IN_PROGRESS && (!process.env.TEST || process.env.TEST.toString() !== 'true')) {
-    //     MODULE_CONFIG.CHECKS_IN_PROGRESS = true;
-    //     setInterval(function () {
-    //         let filename;
+    if (!MODULE_CONFIG.CHECKS_IN_PROGRESS && (!process.env.TEST || process.env.TEST.toString() !== 'true')) {
+        MODULE_CONFIG.CHECKS_IN_PROGRESS = true;
+        setInterval(function () {
+            let filename;
 
-    //         for (filename in configs) {
-    //             if (configs.hasOwnProperty(filename)) {
-    //                 test(filename);
-    //             }
-    //         }
-    //     }, MODULE_CONFIG.CHECKS_TIMEOUT);
-    // }
+            for (filename in configs) {
+                if (configs.hasOwnProperty(filename)) {
+                    test(filename);
+                }
+            }
+        }, MODULE_CONFIG.CHECKS_TIMEOUT);
+    }
 
 }());
 
