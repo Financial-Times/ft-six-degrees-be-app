@@ -9,7 +9,7 @@
         handlerFor404 = require('./middlewares/404'),
         middlewares = require('./middlewares'),
         //Api = require('./api'),
-        //Poller = require('./poller'),
+        Poller = require('./poller'),
         app = express();
 
     middlewares.configure(app);
@@ -18,7 +18,7 @@
     //app.all('/api/:command/:key', Api.handle);
     //app.get('/__health', Api.healthcheck);
 
-    //Poller.init();
+    Poller.init();
 
     app.use(handlerFor404);
 
