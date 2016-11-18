@@ -41,5 +41,5 @@ class Api {
         Health.check(request, response);
     }
 }
-console.log('API LOADED');
+
 module.exports = new Api();
