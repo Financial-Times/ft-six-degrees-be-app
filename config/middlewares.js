@@ -12,7 +12,7 @@ function configure(app) {
     app.use(bodyParser.urlencoded({
         extended: false
     }));
-
+    console.log('PORT', CONFIG.PORT, process.env.PORT);
     app.listen(CONFIG.PORT, function () {
         winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
     });
