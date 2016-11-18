@@ -77,7 +77,7 @@ function getChecks() {
         winston.logger.error('[api-health] Error on attempt to read healthcheck configs from check folder! ' + error);
     });
 
-    if (!MODULE_CONFIG.CHECKS_IN_PROGRESS && process.env.TEST !== true) {
+    if (!MODULE_CONFIG.CHECKS_IN_PROGRESS && (!process.env.TEST || process.env.TEST.toString() !== 'true')) {
         MODULE_CONFIG.CHECKS_IN_PROGRESS = true;
         setInterval(function () {
             let filename;
