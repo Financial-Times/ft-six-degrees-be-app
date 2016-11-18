@@ -1,5 +1,5 @@
 'use strict';
-
+console.log('IN DATES HANDLER');
 const moment = require('moment');
 
 class DatesHandler {
