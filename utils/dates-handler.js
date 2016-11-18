@@ -1,35 +1,37 @@
 'use strict';
 console.log('IN DATES HANDLER');
-//const moment = require('moment');
+const moment = require('moment');
 
 class DatesHandler {
 
     getRange(key, format) {
-        // const reference = moment(),
-        //     today = reference.clone().startOf('day').format(format),
-        //     yesterday = reference.clone().subtract(1, 'days').startOf('day').format(format),
-        //     weekAgo = reference.clone().subtract(7, 'days').startOf('day').format(format),
-        //     monthAgo = reference.clone().subtract(30, 'days').startOf('day').format(format),
-        //     yearAgo = reference.clone().subtract(365, 'days').startOf('day').format(format);
+        format = format || 'YYYY-MM-DD';
 
-        // let fromDate;
+        const reference = moment(),
+            today = reference.clone().startOf('day').format(format),
+            yesterday = reference.clone().subtract(1, 'days').startOf('day').format(format),
+            weekAgo = reference.clone().subtract(7, 'days').startOf('day').format(format),
+            monthAgo = reference.clone().subtract(30, 'days').startOf('day').format(format),
+            yearAgo = reference.clone().subtract(365, 'days').startOf('day').format(format);
 
-        // switch (key) {
-        // case 'day':
-        //     fromDate = yesterday;
-        //     break;
-        // case 'month':
-        //     fromDate = monthAgo;
-        //     break;
-        // case 'year':
-        //     fromDate = yearAgo;
-        //     break;
-        // default:
-        //     fromDate = weekAgo;
-        //     break;
-        // }
+        let fromDate;
 
-        // return [fromDate, today];
+        switch (key) {
+        case 'day':
+            fromDate = yesterday;
+            break;
+        case 'month':
+            fromDate = monthAgo;
+            break;
+        case 'year':
+            fromDate = yearAgo;
+            break;
+        default:
+            fromDate = weekAgo;
+            break;
+        }
+
+        return [fromDate, today];
     }
 }
 
