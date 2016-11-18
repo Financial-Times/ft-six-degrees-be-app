@@ -4,7 +4,7 @@ const moment = require('moment'),
     winston = require('../winston-logger'),
     jsonHandler = require('../utils/json-handler'),
     mentionedPeopleParser = require('../parsers/mentioned-people/'),
-    peopleArticlesStorage = require('./people-articles-storage'),
+    //peopleArticlesStorage = require('./people-articles-storage'),
     datesHandler = require('../utils/dates-handler');
 console.log('IN PEOPLE STORAGE');
 class MentionedPeopleStorage {
@@ -20,17 +20,17 @@ class MentionedPeopleStorage {
         this.instance = 0;
     }
 
-    addNumberOfArticles(key) {
-        const articles = peopleArticlesStorage.get();
+    // addNumberOfArticles(key) {
+    //     const articles = peopleArticlesStorage.get();
 
-        this.storageParsed[key].mentioned.map(person => {
-            articles.map(set => {
-                if (set.id === person.id) {
-                    person.articles = set.content.length;
-                }
-            });
-        });
-    }
+    //     this.storageParsed[key].mentioned.map(person => {
+    //         articles.map(set => {
+    //             if (set.id === person.id) {
+    //                 person.articles = set.content.length;
+    //             }
+    //         });
+    //     });
+    // }
 
     triggerParser(data, key) {
 
@@ -47,7 +47,7 @@ class MentionedPeopleStorage {
         });
 
         mentionedPeopleParser.handle(this.storageParsed[key].mentioned, () => {
-            this.addNumberOfArticles(key);
+            //this.addNumberOfArticles(key);
         });
     }
 
