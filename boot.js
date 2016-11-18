@@ -6,7 +6,7 @@
     }
 
     const express = require('express'),
-        CONFIG = require('../config'),
+        CONFIG = require('./config'),
         handlerFor404 = require('./middlewares/404'),
         middlewares = require('./middlewares'),
         winston = require('../winston-logger'),
