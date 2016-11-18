@@ -1,37 +1,35 @@
-(function () {
-    'use strict';
+'use strict';
 
-    if (require('fs-extra').existsSync('.env.json')) {//eslint-disable-line no-sync
-        require('dot-env');
-    }
+if (require('fs-extra').existsSync('.env.json')) {//eslint-disable-line no-sync
+    require('dot-env');
+}
 
-    const express = require('express'),
-        CONFIG = require('./config'),
-        app = express();
+const express = require('express'),
+    CONFIG = require('./config'),
+    app = express(),
+    handlerFor404 = require('./middlewares/404'),
+    middlewares = require('./middlewares'),
+    //Api = require('./api'),
+    //Poller = require('./poller'),
+    winston = require('./winston-logger');
 
-    app.listen(CONFIG.PORT, function () {
+app.listen(CONFIG.PORT, function () {
+    winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
+});
 
-        const handlerFor404 = require('./middlewares/404'),
-            middlewares = require('./middlewares'),
-            //Api = require('./api'),
-            Poller = require('./poller'),
-            winston = require('./winston-logger');
+middlewares.configure(app);
+app.use(handlerFor404);
 
-        winston.logger.info('[boot] Running server on port ' + CONFIG.PORT + '...');
-        middlewares.configure(app);
-        app.use(handlerFor404);
-
-        Poller.init();
-    });
+//Poller.init();
 
 
 
-    //app.all('/api/:command', Api.handle);
-    //app.all('/api/:command/:key', Api.handle);
-    //app.get('/__health', Api.healthcheck);
+//app.all('/api/:command', Api.handle);
+//app.all('/api/:command/:key', Api.handle);
+//app.get('/__health', Api.healthcheck);
 
-    //Poller.init();
+//Poller.init();
 
 
 
-}());
+
