@@ -8,7 +8,7 @@
     const express = require('express'),
         //handlerFor404 = require('./config/404'),
         middlewares = require('./config/middlewares'),
-        //Api = require('./api'),
+        Api = require('./api'),
         //Poller = require('./poller'),
         app = express();
 
