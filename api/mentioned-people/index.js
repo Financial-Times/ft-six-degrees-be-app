@@ -4,7 +4,7 @@ const responder = require('../common/responder'),
     CONFIG = require('../../config'),
     winston = require('../../winston-logger'),
     cache = require('../../cache');
-console.log('IN2');
+
 function respond(response, data) {
     responder.send(response, {
         status: 200,
