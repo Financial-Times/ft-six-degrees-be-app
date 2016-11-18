@@ -1,10 +1,10 @@
 'use strict';
 console.log('IN DATES HANDLER');
-const moment = require('moment');
+//const moment = require('moment');
 
 class DatesHandler {
 
-    getRange(key, format = 'YYYY-MM-DD') {
+    getRange(key, format) {
         // const reference = moment(),
         //     today = reference.clone().startOf('day').format(format),
         //     yesterday = reference.clone().subtract(1, 'days').startOf('day').format(format),
