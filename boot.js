@@ -16,7 +16,7 @@
 
     app.all('/api/:command', Api.handle);
     app.all('/api/:command/:key', Api.handle);
-    app.get('/__health', Api.healthcheck);
+    //app.get('/__health', Api.healthcheck);
 
     Poller.init();
 
