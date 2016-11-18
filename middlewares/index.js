@@ -1,7 +1,7 @@
 'use strict';
 
 const bodyParser = require('body-parser'),
-    CONFIG = require('./'),
+    CONFIG = require('../config'),
     cors = require('./cors'),
     //authS3O = require('s3o-middleware'),
     winston = require('../winston-logger');
