@@ -1,5 +1,5 @@
 'use strict';
-console.log('IN CACHE');
+
 const MentionedPeopleStorage = require('./mentioned-people-storage'),
     PeopleArticlesStorage = require('./people-articles-storage'),
     storages = {

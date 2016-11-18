@@ -6,7 +6,7 @@ const moment = require('moment'),
     mentionedPeopleParser = require('../parsers/mentioned-people/'),
     peopleArticlesStorage = require('./people-articles-storage'),
     datesHandler = require('../utils/dates-handler');
-
+console.log('IN PEOPLE STORAGE');
 class MentionedPeopleStorage {
 
     constructor() {
