@@ -17,8 +17,8 @@
 
     require('./config/middlewares').configure(app);
 
-    const Api = require('./api');
-    //Poller = require('./poller'),
+    const Api = require('./api'),//eslint-disable-line one-var
+        Poller = require('./poller');
 
 
     //app.all('/api/:command', Api.handle);
