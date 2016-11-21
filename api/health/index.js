@@ -44,7 +44,7 @@ function getCheckSummary(id, result, output) {
 function test(filename) {
     request(configs[filename].url, function (error) {
         if (!error) {
-            winston.logger.info('[health] ' + 'Health check for \'' + filename + '\' successful.');
+            //winston.logger.info('[health] ' + 'Health check for \'' + filename + '\' successful.');
             results[filename] = getCheckSummary(filename, true);
         } else {
             winston.logger.warn('[health] Problem with \'' + filename + '\'...\n' + error);

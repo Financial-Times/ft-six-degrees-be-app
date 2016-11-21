@@ -32,7 +32,7 @@ function getImage(person) {
     });
 }
 
-class MentionedPeopleImages {
+class PeopleImages {
     handle(people) {
         const actions = people && people.length ? people.map(getImage) : [],
             results = actions.length ? Promise.all(actions) : null;
@@ -45,10 +45,10 @@ class MentionedPeopleImages {
                     }
                 });
             }).catch(error => {
-                winston.logger.error('[parsers-mentioned-people-images]\n\n' + error);
+                winston.logger.error('[parsers-common-people-images]\n\n' + error);
             });
         }
     }
 }
 
-module.exports = new MentionedPeopleImages();
+module.exports = new PeopleImages();

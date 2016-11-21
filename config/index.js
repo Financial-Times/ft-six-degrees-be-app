@@ -21,16 +21,22 @@ module.exports = {
         }
     },
     API_KEY: {
+        FT_CONTENT: process.env.FT_API_KEY,
+        FT_RECOMMENDATIONS: process.env.FT_RECOMMENDATIONS_API_KEY,
+        FT_SESSIONS: process.env.FT_SESSIONS_API_KEY,
         SIX_DEGREES: process.env.API_KEY_SIX_DEGREES
     },
     URL: {
         API: {
+            ENRICHED_CONTENT: process.env.FT_API_URL + 'enrichedcontent/',
+            FT_RECOMMENDATIONS_USERS: process.env.FT_RECOMMENDATIONS_USERS_API_URL,
+            FT_SESSIONS: process.env.FT_SESSIONS_API_URL,
             SIX_DEGREES_MENTIONED: process.env.API_URL_SIX_DEGREES_MENTIONED
         }
     },
     SETTINGS: {
         POLLER: {
-            INTERVAL: 5000
+            INTERVAL: process.env.POLLER_INTERVAL || 5000
         }
     }
 };

@@ -4,10 +4,14 @@ const responder = require('./common/responder'),
     Health = require('../api/health'),
     Test = require('../api/test'),
     MentionedPeople = require('./mentioned-people'),
+    PersonalisedPeople = require('./personalised-people'),
+    Session = require('./user/session'),
     winston = require('../winston-logger'),
     apiRoutes = {
         GET: {
             'mentioned': MentionedPeople.get,
+            'people-history': PersonalisedPeople.get,
+            'session': Session.get,
             'test': Test.check
         },
         POST: {}

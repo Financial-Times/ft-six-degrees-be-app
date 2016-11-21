@@ -21,6 +21,11 @@ class Responder {
             'error': 'Unauthorized',
             'type': 'text/plain'
         };
+
+        this.notFoundParams = {
+            status: 404,
+            error: 'not found'
+        };
     }
 
     send(response, params, nolog) {
@@ -44,6 +49,10 @@ class Responder {
 
     reject(response) {
         this.send(response, this.badRequestParams);
+    }
+
+    rejectNotFound(response) {
+        this.send(response, this.notFoundParams);
     }
 
     rejectBadGateway(response) {
