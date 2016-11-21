@@ -20,6 +20,9 @@ module.exports = {
             SEARCH_FOR_HOUSES: 'Search for houses and flats for sale across the UK'
         }
     },
+    API_KEY: {
+        SIX_DEGREES: process.env.API_KEY_SIX_DEGREES
+    },
     URL: {
         API: {
             SIX_DEGREES_MENTIONED: process.env.API_URL_SIX_DEGREES_MENTIONED

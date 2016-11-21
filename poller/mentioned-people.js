@@ -17,7 +17,11 @@ function store(data, key) {
 
 function fetch(url) {
     return new Promise(function (resolve, reject) {
-        request(url, function (err, response) {
+        request(url, {
+            headers: {
+                'Authorization': 'Basic ' + CONFIG.API_KEY.SIX_DEGREES
+            }
+        }, function (err, response) {
             if (err) {
                 reject(err);
             } else {
