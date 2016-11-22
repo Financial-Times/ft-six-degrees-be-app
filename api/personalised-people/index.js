@@ -14,7 +14,7 @@ function getHistory(key, uuid, res) {
         } else if (!error && resp) {
             responder.rejectNotFound(res);
         } else {
-            winston.logger.error('[api-people-history]', error);
+            winston.logger.error('[api-personalised-people] ' + error);
             responder.rejectBadGateway();
         }
     });
