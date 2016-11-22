@@ -9,7 +9,6 @@ const request = require('request'),
 
 function getRecency(key) {
     let recency;
-    console.warn('XXXXk', key);
     switch (key) {
     case 'year':
         recency = '365';
