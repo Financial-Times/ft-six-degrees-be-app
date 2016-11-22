@@ -14,7 +14,7 @@ function getHistory(key, uuid, res) {
         } else if (!error && resp) {
             responder.rejectNotFound(res);
         } else {
-            winston.logger.error('[api-personalised-people] ' + error);
+            winston.logger.error('[api-personalised-people] ' + error + ' URL ' + CONFIG.URL.API.FT_RECOMMENDATIONS_USERS + uuid + '/history?limit=50&recency=7&apiKey=');
             responder.rejectBadGateway();
         }
     });
