@@ -1,10 +1,14 @@
 'use strict';
 
-const MentionedPeopleStorage = require('./mentioned-people-storage'),
+const ContentStorage = require('./content-storage'),
+    MentionedPeopleStorage = require('./mentioned-people-storage'),
     MentionedPeopleArticlesStorage = require('./mentioned-people-articles-storage'),
+    PersonalisedPeopleArticlesStorage = require('./personalised-people-articles-storage'),
     storages = {
+        'content-storage': ContentStorage,
         'mentioned-people': MentionedPeopleStorage,
-        'people-articles': MentionedPeopleArticlesStorage
+        'mentioned-people-articles': MentionedPeopleArticlesStorage,
+        'personalised-people-articles': PersonalisedPeopleArticlesStorage
     };
 
 class Cache {
