@@ -1,10 +1,15 @@
 'use strict';
 
 const request = require('request'),
+    moment = require('moment'),
     CONFIG = require('../config'),
     cache = require('../cache'),
     winston = require('../winston-logger'),
     datesHandler = require('../utils/dates-handler');
+
+function isToday(today, momentDate) {
+    return momentDate.isSame(today, 'd');
+}
 
 function addDateRange(key) {
     const range = datesHandler.getRange(key);
@@ -33,9 +38,22 @@ function fetch(url) {
 
 class MentionedPeoplePoller {
 
+    cleanup(today) {
+        let key;
+
+        for (key in this.cached) {
+            if (this.cached.hasOwnProperty(key)) {
+                if (!isToday(today, moment(key))) {
+                    delete this.cached[key];
+                }
+            }
+        }
+    }
+
     get() {
 
-        const keys = ['month', 'week', 'day', 'year'];
+        const today = moment().startOf('day'),
+            keys = ['month', 'week', 'day', 'year'];
         let key;
 
         if (!this.counter || this.counter >= 4) {
@@ -46,18 +64,28 @@ class MentionedPeoplePoller {
 
         key = keys[this.counter - 1];//eslint-disable-line prefer-const
 
-        fetch(CONFIG.URL.API.SIX_DEGREES_MENTIONED + addDateRange(key))
-            .then(response => {
-                store(response, key);
-            })
-            .catch(err => {
-                this.counter -= 1; //if error, make poller to send request for the same dates again in the next iteration
-                winston.logger.error('[poller-mentioned-people] Response error:\n' + err);
-            });
+        //if data already stored, do not trigger new fetch for 24 hrs
+        if (!this.cached || !this.cached[today] || !this.cached[today][key]) {
+            this.cleanup(today);
+            fetch(CONFIG.URL.API.SIX_DEGREES_MENTIONED + addDateRange(key))
+                .then(response => {
+                    store(response, key);
+                    this.cached = this.cached || {};
+                    this.cached[today] = this.cached[today] || {};
+                    this.cached[today][key] = response;
+                })
+                .catch(err => {
+                    this.counter -= 1; //if error, make poller to send request for the same dates again in the next iteration
+                    winston.logger.error('[poller-mentioned-people] Response error:\n' + err);
+                });
+
+        }
     }
 
     start() {
-        setInterval(this.get, CONFIG.SETTINGS.POLLER.INTERVAL);
+        setInterval(() => {
+            this.get();
+        }, CONFIG.SETTINGS.POLLER.INTERVAL);
     }
 
 }
