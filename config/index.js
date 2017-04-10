@@ -32,8 +32,8 @@ module.exports = {
             ENRICHED_CONTENT: process.env.FT_API_URL + 'enrichedcontent/',
             FT_RECOMMENDATIONS_USERS: process.env.FT_RECOMMENDATIONS_USERS_API_URL,
             FT_SESSIONS: process.env.FT_SESSIONS_API_URL,
-            SIX_DEGREES_MENTIONED: process.env.API_URL_SIX_DEGREES_MENTIONED,
-            SIX_DEGREES_HOST: process.env.API_URL_SIX_DEGREES_HOST
+            SIX_DEGREES_MENTIONED: process.env.API_URL_SIX_DEGREES + 'mostMentionedPeople',
+            SIX_DEGREES_HOST: process.env.API_URL_SIX_DEGREES
         }
     },
     SETTINGS: {
