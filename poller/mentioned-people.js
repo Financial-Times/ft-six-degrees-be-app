@@ -1,6 +1,6 @@
 'use strict';
 
-const request = require('request'),
+const fetch = require('node-fetch'),
     moment = require('moment'),
     CONFIG = require('../config'),
     cache = require('../cache'),
@@ -20,22 +20,6 @@ function store(data, key) {
     cache.store('mentioned-people', data, key);
 }
 
-function fetch(url) {
-    return new Promise(function (resolve, reject) {
-        request(url, {
-            headers: {
-                'Authorization': 'Basic ' + CONFIG.API_KEY.SIX_DEGREES
-            }
-        }, function (err, response) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(response.body);
-            }
-        });
-    });
-}
-
 class MentionedPeoplePoller {
 
     cleanup(today) {
@@ -43,7 +27,7 @@ class MentionedPeoplePoller {
 
         for (key in this.cached) {
             if (this.cached.hasOwnProperty(key)) {
-                if (!isToday(today, moment(key))) {
+                if (!isToday(today, moment(key, 'ddd MMM YYYY HH:mm:ss Z'))) {
                     delete this.cached[key];
                 }
             }
@@ -52,6 +36,7 @@ class MentionedPeoplePoller {
 
     get() {
 
+    	const url = `${CONFIG.URL.API.SIX_DEGREES_MENTIONED}?apiKey=${CONFIG.API_KEY.SIX_DEGREES}`;
         const today = moment().startOf('day'),
             keys = ['month', 'week', 'day', 'year'];
         let key;
@@ -67,7 +52,8 @@ class MentionedPeoplePoller {
         //if data already stored, do not trigger new fetch for 24 hrs
         if (!this.cached || !this.cached[today] || !this.cached[today][key]) {
             this.cleanup(today);
-            fetch(CONFIG.URL.API.SIX_DEGREES_MENTIONED + addDateRange(key))
+            fetch(`${url}&${addDateRange(key)}`)
+                .then(res => res.ok && res.text())
                 .then(response => {
                     store(response, key);
                     this.cached = this.cached || {};

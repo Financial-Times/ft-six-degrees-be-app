@@ -21,11 +21,8 @@ function fetch(key, uuid) {
         toDate = datesRange[1];
 
     return new Promise(function (resolve, reject) {
-        request(CONFIG.URL.API.SIX_DEGREES_HOST + 'connectedPeople?minimumConnections=2&fromDate=' + fromDate + '&toDate=' + toDate + '&limit=10&contentLimit=20&uuid=' + uuid, {
-            headers: {
-                'Authorization': 'Basic ' + CONFIG.API_KEY.SIX_DEGREES
-            }
-        }, function (error, response, body) {
+    	let url = CONFIG.URL.API.SIX_DEGREES_HOST + 'connectedPeople?minimumConnections=2&fromDate=' + fromDate + '&toDate=' + toDate + '&limit=10&contentLimit=20&uuid=' + uuid + '&apiKey=' + CONFIG.API_KEY.SIX_DEGREES;
+        request(url, function (error, response, body) {
             if (error) {
                 reject(error);
             } else {

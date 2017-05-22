@@ -55,6 +55,7 @@ class PeopleStorage {
                 time: moment().unix()
             },
             people: jsonHandler.parse(data)
+            // people: data
         });
 
         this.peopleParser.handle(this.storageParsed[key].people, () => {
