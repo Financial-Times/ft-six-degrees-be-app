@@ -21,6 +21,7 @@
     "express": "*",
     "fs-extra": "*",
     "moment": "*",
+    "node-fetch": "^1.6.3",
     "promise": "*",
     "q": "*",
     "request": "*",
