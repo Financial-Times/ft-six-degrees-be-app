@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://git.heroku.com/ft-six-degrees-be-app.git"
   },
-  "engines": {
-    "node": "^6.11.1"
-  },
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^3.0.2",
