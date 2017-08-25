@@ -10,3 +10,5 @@ node_modules
 npm-debug.log
 logs
 
+.idea
+package-lock.json
