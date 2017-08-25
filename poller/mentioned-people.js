@@ -38,7 +38,7 @@ class MentionedPeoplePoller {
 
     	const url = `${CONFIG.URL.API.SIX_DEGREES_MENTIONED}?apiKey=${CONFIG.API_KEY.SIX_DEGREES}`;
         const today = moment().startOf('day'),
-            keys = ['month', 'week', 'day', 'year'];
+            keys = ['7 days', '14 days', 'month', '6 months'];
         let key;
 
         if (!this.counter || this.counter >= 4) {

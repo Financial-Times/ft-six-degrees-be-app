@@ -6,32 +6,18 @@ class DatesHandler {
 
     getRange(key, format) {
         format = format || 'YYYY-MM-DD';
+        let dateParams = key.split(' ');
 
-        const reference = moment(),
-            today = reference.clone().startOf('day').format(format),
-            yesterday = reference.clone().subtract(1, 'days').startOf('day').format(format),
-            weekAgo = reference.clone().subtract(7, 'days').startOf('day').format(format),
-            monthAgo = reference.clone().subtract(30, 'days').startOf('day').format(format),
-            yearAgo = reference.clone().subtract(365, 'days').startOf('day').format(format);
-
-        let fromDate;
-
-        switch (key) {
-        case 'day':
-            fromDate = yesterday;
-            break;
-        case 'month':
-            fromDate = monthAgo;
-            break;
-        case 'year':
-            fromDate = yearAgo;
-            break;
-        default:
-            fromDate = weekAgo;
-            break;
+        let fromDate = null;
+        const today = moment().startOf('day').format(format);
+        if (dateParams.length < 2 || isNaN(parseInt(dateParams[0], 10))) {
+            fromDate = moment().subtract(1, 'month');
+        } else {
+	        fromDate = moment()
+		        .subtract(parseInt(dateParams[0] || 1, 10), dateParams[1] || 'months');
         }
 
-        return [fromDate, today];
+        return [fromDate.format(format), today];
     }
 }
 
