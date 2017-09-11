@@ -12,10 +12,10 @@ class PeopleStorage {
         this.description = description;
 
         this.storageOriginal = {
-            day: [],
-            week: [],
-            month: [],
-            year: []
+            '7 days': [],
+            '14 days': [],
+            'month': [],
+            '6 months': []
         };
         this.storageParsed = {};
         this.instance = 0;
@@ -60,18 +60,18 @@ class PeopleStorage {
 
         this.peopleParser.handle(this.storageParsed[key].people, () => {
             this.addNumberOfArticles(key, clientRes);
-        });
+        }, key);
     }
 
     get(key) {
         return key ? this.storageParsed[key] : this.storageParsed;
     }
 
-    cache(data, key) {
+    cache(data, key, clientRes) {
         if (data && this.storageOriginal[key] !== data) {
             winston.logger.info(this.description + ' New data detected for ' + key + ', storing and parsing.\n\n' + data);
             this.storageOriginal[key] = data;
-            this.triggerParser(data, key);
+            this.triggerParser(data, key, clientRes);
         }
     }
 
