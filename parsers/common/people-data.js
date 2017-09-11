@@ -19,7 +19,7 @@ class PeopleData {
         this.peopleArticlesParser = peopleArticlesParser;
     }
 
-    handle(people, articlesCallback) {
+    handle(people, articlesCallback, key) {
 
         people.map(person => {
             person.abbrName = getAbbreviatedName(person.prefLabel);
@@ -33,7 +33,7 @@ class PeopleData {
 
         PeopleImagesParser.handle(people);
 
-        this.peopleArticlesParser.handle(people, articlesCallback);
+        this.peopleArticlesParser.handle(people, articlesCallback, key);
     }
 }
 
