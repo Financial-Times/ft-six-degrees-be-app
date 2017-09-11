@@ -1,13 +1,14 @@
 'use strict';
 
 const moment = require('moment'),
-    request = require('request'),
-    responder = require('../common/responder'),
-    cache = require('../../cache'),
-    contentStorage = require('../../cache/content-storage'),
-    jsonHandler = require('../../utils/json-handler'),
-    uuidUtils = require('../../utils/uuid'),
-    CONFIG = require('../../config');
+      request = require('request'),
+      responder = require('../common/responder'),
+      cache = require('../../cache'),
+      contentStorage = require('../../cache/content-storage'),
+      jsonHandler = require('../../utils/json-handler'),
+      datesHandler = require('../../utils/dates-handler'),
+      uuidUtils = require('../../utils/uuid'),
+      CONFIG = require('../../config');
 
 function respond(response, data) {
     responder.send(response, {
@@ -21,9 +22,10 @@ function getSliced(articles) {
     return [].concat(articles).slice(0, 5);
 }
 
-function fetchSingle(item) {
+function fetchSingle(item, key) {
+    const range = datesHandler.getRange(key);
     return new Promise(function (resolve, reject) {
-        request(CONFIG.URL.API.CONTENT + 'content/' + uuidUtils.extract(item.id) + '?apiKey=' + CONFIG.API_KEY.FT_CONTENT, function (err, res) {
+        request(CONFIG.URL.API.CONTENT + 'content/' + uuidUtils.extract(item.id) + '?fromDate=' + range[0] + '&toDate=' + range[1] + '&apiKey=' + CONFIG.API_KEY.FT_CONTENT, function (err, res) {
             if (err) {
                 reject(err);
             } else {
@@ -60,13 +62,14 @@ function fetchSingle(item) {
 
 function getAll(uuid, key, content, clientResponse) {
 
-    const actions = content && content.map ? content.map(fetchSingle) : [],
+    const actions = content && content.map ? content.map((item) => fetchSingle(item, key)) : [],
         results = actions.length ? Promise.all(actions) : null;
 
     if (results) {
         results.then(articles => {
             contentStorage.cache(moment().format('YYYY-MM-DD'), uuid, key, articles);
-            respond(clientResponse, getSliced(articles));
+            // respond(clientResponse, getSliced(articles));
+	        respond(clientResponse, articles);
         }).catch(() => {
             responder.rejectBadGateway(clientResponse);
         });
@@ -88,7 +91,8 @@ class PeopleArticles {
             responder.reject(res);
         } else {
             if (stored) {
-                respond(res, getSliced(stored));
+                // respond(res, getSliced(stored));
+	            respond(res, stored);
             } else {
                 const mentionedPeopleArticles = cache.get('mentioned-people-articles'),
                     personalisedPeopleArticles = cache.get('personalised-people-articles'),
