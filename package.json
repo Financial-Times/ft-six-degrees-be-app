@@ -17,6 +17,7 @@
     "dot-env": "*",
     "express": "*",
     "fs-extra": "*",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "node-fetch": "^1.6.3",
     "promise": "*",
