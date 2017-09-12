@@ -7,8 +7,9 @@ const request = require('request'),
     personalisedPeopleStorage = require('../../cache/personalised-people-storage');
 
 function getEnrichedContent(article) {
+	const url = CONFIG.URL.API.ENRICHED_CONTENT + article.id + '?apiKey=' + CONFIG.API_KEY.FT_CONTENT;
     return new Promise(function (resolve, reject) {
-        request(CONFIG.URL.API.ENRICHED_CONTENT + article.id + '?apiKey=' + CONFIG.API_KEY.FT_CONTENT, {
+        request(url, {
             headers: {
                 'x-api-key': process.env.FT_API_KEY
             }
@@ -39,7 +40,7 @@ class EnrichedContent {
 
                 enrichedcontent.map(content => {
                     content.annotations.map(annotation => {
-                        if (annotation.type === 'PERSON' && getAnnotationPredicate(annotation.predicate) !== 'hasAuthor') {
+                        if (annotation.type === 'PERSON' && getAnnotationPredicate(annotation.predicate) !== 'hasAuthor' && getAnnotationPredicate(annotation.predicate) !== 'majorMentions') {
 							annotatedPeople.push({
 								id: annotation.id,
 								prefLabel: annotation.prefLabel
