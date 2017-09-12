@@ -18,7 +18,8 @@ function getRecency(key) {
 }
 
 function getHistory(key, uuid, res) {
-    return request(CONFIG.URL.API.FT_RECOMMENDATIONS_USERS + uuid + '/history?limit=100&recency=' + getRecency(key) + '&apiKey=' + CONFIG.API_KEY.FT_RECOMMENDATIONS, function (error, resp, history) {
+	const url = CONFIG.URL.API.FT_RECOMMENDATIONS_USERS + uuid + '/history?limit=100&recency=' + getRecency(key) + '&apiKey=' + CONFIG.API_KEY.FT_RECOMMENDATIONS;
+    return request(url, function (error, resp, history) {
         if (resp && resp.statusCode === 200) {
             EnrichedContent.getPeople(res, JSON.parse(history).response, key);
         } else if (!error && resp) {

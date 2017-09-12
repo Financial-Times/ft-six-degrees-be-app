@@ -67,6 +67,7 @@ function getAll(uuid, key, content, clientResponse) {
 
     if (results) {
         results.then(articles => {
+            articles = articles.filter(a => a.hasOwnProperty('id'));
             contentStorage.cache(moment().format('YYYY-MM-DD'), uuid, key, articles);
             // respond(clientResponse, getSliced(articles));
 	        respond(clientResponse, articles);
@@ -98,7 +99,7 @@ class PeopleArticles {
                     personalisedPeopleArticles = cache.get('personalised-people-articles'),
                     cachedArticles = [].concat(mentionedPeopleArticles, personalisedPeopleArticles),
                     articles = cachedArticles && cachedArticles.length ? cachedArticles.filter(set => {
-                        return set.id === uuidUtils.decorate(uuid);
+                        return set.id && set.id === uuidUtils.decorate(uuid);
                     }) : [];
 
                 if (articles.length) {
