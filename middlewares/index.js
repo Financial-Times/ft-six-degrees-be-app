@@ -1,9 +1,9 @@
 'use strict';
 
-const cors = require('./cors');
+const cors = require('cors');
 
 function configure(app) {
-	app.use(cors);
+	app.use(cors());
 }
 
 module.exports = {
