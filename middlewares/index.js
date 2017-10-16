@@ -1,17 +1,11 @@
 'use strict';
 
-const bodyParser = require('body-parser'),
-    //authS3O = require('s3o-middleware'),
-    cors = require('./cors');
+const cors = require('./cors');
 
 function configure(app) {
-    //app.use(authS3O);
-    app.use(cors);
-    app.use(bodyParser.urlencoded({
-        extended: false
-    }));
+	app.use(cors);
 }
 
 module.exports = {
-    configure: configure
+	configure
 };
