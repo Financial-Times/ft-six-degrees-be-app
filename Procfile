@@ -1,1 +1,1 @@
-web: node boot.js
+web: node --inspect-brk boot.js

@@ -24,7 +24,7 @@ function getConnections(key, uuid) {
 	const url = `${CONFIG.URL.API
 		.SIX_DEGREES_HOST}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&limit=9&contentLimit=20&uuid=${uuid}&apiKey=${CONFIG
 		.API_KEY.SIX_DEGREES}`;
-	return fetch(url).then(res => res.json());
+	return fetch(url).then(res => res.ok && res.json());
 }
 
 function getImage(person) {
@@ -68,6 +68,9 @@ class Connections {
 		} else {
 			getConnections(key, uuid)
 				.then(rawConnections => {
+					if (!rawConnections) {
+						respond(res, []);
+					}
 					const connections = rawConnections.map(conn => {
 						conn.person = Object.assign({}, conn.person, {
 							abbrName: getAbbreviatedName(conn.person.prefLabel),
