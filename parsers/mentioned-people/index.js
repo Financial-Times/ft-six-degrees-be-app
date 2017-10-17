@@ -1,13 +1,12 @@
 'use strict';
 
 const PeopleData = require('../common/people-data'),
-    mentionedPeopleArticlesParser = require('./articles');
+	mentionedPeopleArticlesParser = require('./articles');
 
 class MentionedPeopleParser extends PeopleData {
-
-    constructor() {
-        super(mentionedPeopleArticlesParser);
-    }
+	constructor() {
+		super(mentionedPeopleArticlesParser);
+	}
 }
 
 module.exports = new MentionedPeopleParser();

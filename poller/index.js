@@ -3,11 +3,9 @@
 const MentionedPeoplePoller = require('./mentioned-people');
 
 class Poller {
-
-    init() {
-        MentionedPeoplePoller.start();
-    }
-
+	init() {
+		MentionedPeoplePoller.start();
+	}
 }
 
 module.exports = new Poller();

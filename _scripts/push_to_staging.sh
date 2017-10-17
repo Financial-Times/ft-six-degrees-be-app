@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo "Pushing to staging..."
 
 git config --global user.email $GITHUB_USER_EMAIL
