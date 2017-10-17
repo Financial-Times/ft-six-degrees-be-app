@@ -1,38 +1,24 @@
 'use strict';
 
-const request = require('request'),
-	winston = require('../../winston-logger'),
-	jsonHandler = require('../../utils/json-handler');
+const fetch = require('node-fetch');
+const winston = require('../../winston-logger');
 
 function getImage(person) {
-	return new Promise((resolve, reject) => {
-		request(
-			'https://en.wikipedia.org/w/api.php?action=query&titles=' +
-				person.abbrName +
-				'&prop=pageimages&format=json&pithumbsize=600',
-			(err, response, body) => {
-				if (err) {
-					reject(err);
-				} else {
-					let url;
-
-					body = jsonHandler.parse(body);
-
-					if (body.query && body.query.pages) {
-						Object.keys(body.query.pages).forEach(key => {
-							url = body.query.pages[key].thumbnail
-								? body.query.pages[key].thumbnail.source
-								: null;
-						});
-					}
-
-					resolve({
-						url
-					});
-				}
+	return fetch(
+		`https://en.wikipedia.org/w/api.php?action=query&titles=${person.abbrName}&prop=pageimages&format=json&pithumbsize=600`
+	)
+		.then(res => res.ok && res.json())
+		.then(body => {
+			let url;
+			if (body.query && body.query.pages) {
+				Object.keys(body.query.pages).forEach(key => {
+					url = body.query.pages[key].thumbnail
+						? body.query.pages[key].thumbnail.source
+						: null;
+				});
 			}
-		);
-	});
+			return { url };
+		});
 }
 
 class PeopleImages {

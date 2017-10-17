@@ -1,42 +1,22 @@
 'use strict';
 
-const request = require('request'),
-	uniqBy = require('lodash/uniqBy'),
-	datesHandler = require('../../utils/dates-handler'),
-	winston = require('../../winston-logger');
+const fetch = require('node-fetch');
+const uniqBy = require('lodash/uniqBy');
+const datesHandler = require('../../utils/dates-handler');
+const winston = require('../../winston-logger');
 
 function getArticles(person, key) {
 	const dates = key ? datesHandler.getRange(key) : ['', ''];
-	return new Promise((resolve, reject) => {
-		request(
-			process.env.FT_API_URL +
-				'content?isAnnotatedBy=' +
-				person.id +
-				'&fromDate=' +
-				dates[0] +
-				'&toDate=' +
-				dates[1],
-			{
-				headers: {
-					'x-api-key': process.env.FT_API_KEY
-				}
-			},
-			(error, response, content) => {
-				if (error) {
-					reject(error);
-				} else {
-					const uniqueContent = uniqBy(
-						JSON.parse(content),
-						'id'
-					).filter(item => item.hasOwnProperty('id'));
-					resolve({
-						id: person.id,
-						content: uniqueContent
-					});
-				}
-			}
-		);
-	});
+	const url = `${process.env.FT_API_URL}content?isAnnotatedBy=${person.id}&fromDate=${dates[0]}&toDate=${dates[1]}`;
+	return fetch(url, { headers: { 'x-api-key': process.env.FT_API_KEY } })
+		.then(res => res.ok && res.json())
+		.then(content => {
+			const uniqueContent = uniqBy(content, 'id');
+			return {
+				id: person.id,
+				content: uniqueContent
+			};
+		});
 }
 
 class AnnotatedArticles {

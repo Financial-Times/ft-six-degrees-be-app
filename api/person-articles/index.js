@@ -1,14 +1,13 @@
 'use strict';
 
-const moment = require('moment'),
-	request = require('request'),
-	responder = require('../common/responder'),
-	cache = require('../../cache'),
-	contentStorage = require('../../cache/content-storage'),
-	jsonHandler = require('../../utils/json-handler'),
-	datesHandler = require('../../utils/dates-handler'),
-	uuidUtils = require('../../utils/uuid'),
-	CONFIG = require('../../config');
+const moment = require('moment');
+const fetch = require('node-fetch');
+const responder = require('../common/responder');
+const cache = require('../../cache');
+const contentStorage = require('../../cache/content-storage');
+const datesHandler = require('../../utils/dates-handler');
+const uuidUtils = require('../../utils/uuid');
+const CONFIG = require('../../config');
 
 function respond(response, data) {
 	responder.send(response, {
@@ -19,79 +18,47 @@ function respond(response, data) {
 
 function fetchSingle(item, key) {
 	const range = datesHandler.getRange(key);
-	return new Promise((resolve, reject) => {
-		request(
-			CONFIG.URL.API.CONTENT +
-				'content/' +
-				uuidUtils.extract(item.id) +
-				'?fromDate=' +
-				range[0] +
-				'&toDate=' +
-				range[1] +
-				'&apiKey=' +
-				CONFIG.API_KEY.FT_CONTENT,
-			(err, res) => {
-				if (err) {
-					reject(err);
-				} else {
-					const body = jsonHandler.parse(res.body);
-
-					if (body && body.mainImage && body.mainImage.id) {
-						const uuid = body.mainImage.id
-							.replace('http', 'https')
-							.replace(CONFIG.URL.API.CONTENT + 'content/', '');
-
-						request(
-							{
-								url:
-									CONFIG.URL.API.CONTENT +
-									uuid +
-									'?apiKey=' +
-									CONFIG.API_KEY.FT_CONTENT
-							},
-							(imagesError, imagesResponse, imagesBody) => {
-								imagesBody = jsonHandler.parse(imagesBody);
-								if (imagesBody.members) {
-									const memberUuid = imagesBody.members[0].id
-										.replace('http', 'https')
-										.replace(
-											CONFIG.URL.API.CONTENT + 'content/',
-											''
-										);
-									request(
-										{
-											url:
-												CONFIG.URL.API.CONTENT +
-												memberUuid +
-												'?apiKey=' +
-												CONFIG.API_KEY.FT_CONTENT
-										},
-										(
-											imageError,
-											imageResponse,
-											imageBody
-										) => {
-											imageBody = jsonHandler.parse(
-												imageBody
-											);
-											body.binaryUrl =
-												imageBody.binaryUrl;
-											body.imageUrl = body.binaryUrl;
-											resolve(body);
-										}
-									);
-								} else {
-									resolve(body);
-								}
-							}
-						);
-					} else {
-						resolve(body);
-					}
-				}
+	const url = `${CONFIG.URL.API.CONTENT}content/${uuidUtils.extract(
+		item.id
+	)}?fromDate=${range[0]}&toDate=${range[1]}&apiKey=${CONFIG.API_KEY
+		.FT_CONTENT}`;
+	return fetch(url)
+		.then(res => res.ok && res.json())
+		.then(body => {
+			if (body && body.mainImage && body.mainImage.id) {
+				const uuid = body.mainImage.id
+					.replace('http', 'https')
+					.replace(CONFIG.URL.API.CONTENT + 'content/', '');
+				return fetch(
+					`${CONFIG.URL.API.CONTENT}${uuid}?apiKey=${CONFIG.API_KEY
+						.FT_CONTENT}`
+				)
+					.then(res => res.ok && res.json())
+					.then(imagesBody => {
+						if (imagesBody.members) {
+							const memberUuid = imagesBody.members[0].id
+								.replace('http', 'https')
+								.replace(
+									CONFIG.URL.API.CONTENT + 'content/',
+									''
+								);
+							return fetch(
+								`${CONFIG.URL.API
+									.CONTENT}${memberUuid}?apiKey=${CONFIG
+									.API_KEY.FT_CONTENT}`
+							)
+								.then(res => res.ok && res.json())
+								.then(imageBody => {
+									body.binaryUrl = imageBody.binaryUrl;
+									body.imageUrl = body.binaryUrl;
+									return body;
+								});
+						}
+						return body;
+					});
 			}
-		);
-	});
+			return body;
+		});
 }
 
 function getAll(uuid, key, content, clientResponse) {

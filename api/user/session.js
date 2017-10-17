@@ -1,29 +1,8 @@
 'use strict';
 
-const request = require('request'),
-	CONFIG = require('../../config'),
-	jsonHandler = require('../../utils/json-handler'),
-	responder = require('../common/responder');
-
-function fetch(sessionId) {
-	return new Promise(function(resolve, reject) {
-		request(
-			{
-				url: CONFIG.URL.API.FT_SESSIONS + sessionId,
-				headers: {
-					'X-Api-Key': CONFIG.API_KEY.FT_SESSIONS
-				}
-			},
-			function(err, response) {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(response.body);
-				}
-			}
-		);
-	});
-}
+const fetch = require('node-fetch');
+const CONFIG = require('../../config');
+const responder = require('../common/responder');
 
 function respond(response, data) {
 	responder.send(response, {
@@ -34,18 +13,21 @@ function respond(response, data) {
 
 class Session {
 	get(req, res) {
-		fetch(req.params.key).then(response => {
-			const session = jsonHandler.parse(response) || {},
-				uuid = session.uuid;
+		fetch(`${CONFIG.URL.API.FT_SESSIONS}${req.params.key}`, {
+			headers: { 'X-Api-Key': CONFIG.API_KEY.FT_SESSIONS }
+		})
+			.then(resp => resp.ok && resp.json())
+			.then((session = {}) => {
+				const { uuid } = session;
 
-			if (uuid) {
-				respond(res, {
-					uuid: uuid
-				});
-			} else {
-				responder.reject(res);
-			}
-		});
+				if (uuid) {
+					respond(res, {
+						uuid: uuid
+					});
+				} else {
+					responder.reject(res);
+				}
+			});
 	}
 }
 

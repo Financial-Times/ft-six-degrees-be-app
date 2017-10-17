@@ -1,34 +1,15 @@
 'use strict';
 
-const request = require('request'),
-	winston = require('../../winston-logger'),
-	uniqBy = require('lodash/uniqBy'),
-	CONFIG = require('../../config'),
-	personalisedPeopleStorage = require('../../cache/personalised-people-storage');
+const fetch = require('node-fetch');
+const uniqBy = require('lodash/uniqBy');
+const winston = require('../../winston-logger');
+const CONFIG = require('../../config');
+const personalisedPeopleStorage = require('../../cache/personalised-people-storage');
 
 function getEnrichedContent(article) {
-	const url =
-		CONFIG.URL.API.ENRICHED_CONTENT +
-		article.id +
-		'?apiKey=' +
-		CONFIG.API_KEY.FT_CONTENT;
-	return new Promise((resolve, reject) => {
-		request(
-			url,
-			{
-				headers: {
-					'x-api-key': process.env.FT_API_KEY
-				}
-			},
-			(error, response, content) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(JSON.parse(content));
-				}
-			}
-		);
-	});
+	const url = `${CONFIG.URL.API.ENRICHED_CONTENT}${article.id}?apiKey=${CONFIG.API_KEY.FT_CONTENT}`;
+	return fetch(url, { headers: { 'x-api-key': process.env.FT_API_KEY } })
+		.then(res => res.ok && res.json());
 }
 
 const getAnnotationPredicate = predicate =>
