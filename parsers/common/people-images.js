@@ -18,7 +18,7 @@ function getImage(person) {
 				});
 			}
 			return { url };
-		});
+		}).catch(() => {});
 }
 
 class PeopleImages {
