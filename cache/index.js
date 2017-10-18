@@ -12,8 +12,8 @@ const ContentStorage = require('./content-storage'),
 	};
 
 class Cache {
-	get(storage, key) {
-		return storages[storage].get(key);
+	get(storage, key, userId) {
+		return storages[storage].get(key, userId);
 	}
 
 	store(storage, data, key) {

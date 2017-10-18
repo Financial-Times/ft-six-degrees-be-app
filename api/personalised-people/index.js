@@ -2,11 +2,9 @@
 
 const fetch = require('node-fetch');
 const moment = require('moment');
-const isEmpty = require('lodash/isEmpty');
 const responder = require('../common/responder');
 const CONFIG = require('../../config');
 const EnrichedContent = require('../../parsers/enriched-content');
-const PersonalisedPeopleStorage = require('../../cache/personalised-people-storage');
 const winston = require('../../winston-logger');
 
 function getRecency(key) {
@@ -28,7 +26,7 @@ function getHistory(key, uuid, res) {
 			}
 			return resp.json();
 		})
-		.then(history => EnrichedContent.getPeople(res, history.response, key))
+		.then(history => EnrichedContent.getPeople(res, history.response, key, uuid))
 		.catch(error => {
 			winston.logger.error(`[api-personalised-people] ${error}`);
 			responder.rejectBadGateway();
@@ -37,15 +35,7 @@ function getHistory(key, uuid, res) {
 
 class PeopleHistory {
 	get(req, res) {
-		const stored = PersonalisedPeopleStorage.get(req.params.key);
-		if (!isEmpty(stored)) {
-			responder.send(res, {
-				status: 200,
-				data: stored.people
-			});
-		} else {
-			getHistory(req.params.key, req.params.uuid, res);
-		}
+		getHistory(req.params.key, req.params.uuid, res);
 	}
 }
 

@@ -91,7 +91,7 @@ function getAll(uuid, key, content, clientResponse) {
 class PeopleArticles {
 	get(req, res) {
 		const date = moment().format('YYYY-MM-DD'),
-			{ uuid, key } = req.params,
+			{ uuid, key, userId } = req.params,
 			stored = contentStorage.get(date, uuid, key);
 
 		if (!uuid) {
@@ -102,7 +102,7 @@ class PeopleArticles {
 			const mentionedPeopleArticles =
 					cache.get('mentioned-people-articles', key) || [],
 				personalisedPeopleArticles =
-					cache.get('personalised-people-articles', key) || [],
+					cache.get('personalised-people-articles', key, userId) || [],
 				cachedArticles = [].concat(
 					mentionedPeopleArticles,
 					personalisedPeopleArticles

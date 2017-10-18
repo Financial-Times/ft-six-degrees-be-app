@@ -25,7 +25,7 @@ class AnnotatedArticles {
 		this.articlesStorage = articlesStorage;
 	}
 
-	handle(people, articlesCallback, key) {
+	handle(people, articlesCallback, key, uuid) {
 		const actions =
 				people && people.length
 					? people.map(person => getArticles(person, key))
@@ -35,7 +35,7 @@ class AnnotatedArticles {
 		if (results) {
 			results
 				.then(articles => {
-					this.articlesStorage.cache(articles, key);
+					this.articlesStorage.cache(articles, key, uuid);
 					articlesCallback();
 				})
 				.catch(error => {

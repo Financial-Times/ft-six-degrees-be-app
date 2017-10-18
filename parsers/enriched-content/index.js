@@ -16,7 +16,7 @@ const getAnnotationPredicate = predicate =>
 	predicate.substring(predicate.lastIndexOf('/') + 1, predicate.length);
 
 class EnrichedContent {
-	getPeople(clientRes, history, key) {
+	getPeople(clientRes, history, key, uuid) {
 		const articles = uniqBy(history.articles, 'id'),
 			actions =
 				articles && articles.length
@@ -30,27 +30,30 @@ class EnrichedContent {
 					const annotatedPeople = [];
 
 					enrichedcontent.forEach(content => {
-						content.annotations.forEach(annotation => {
-							if (
-								annotation.type === 'PERSON' &&
-								getAnnotationPredicate(annotation.predicate) !==
+						if (content) {
+							content.annotations.forEach(annotation => {
+								if (
+									annotation.type === 'PERSON' &&
+									getAnnotationPredicate(annotation.predicate) !==
 									'hasAuthor' &&
-								getAnnotationPredicate(annotation.predicate) !==
+									getAnnotationPredicate(annotation.predicate) !==
 									'majorMentions'
-							) {
-								annotatedPeople.push({
-									id: annotation.id,
-									prefLabel: annotation.prefLabel
-								});
-							}
-						});
+								) {
+									annotatedPeople.push({
+										id: annotation.id,
+										prefLabel: annotation.prefLabel
+									});
+								}
+							});
+						}
 					});
 					const uniqueAnnotatedPeople = uniqBy(annotatedPeople, 'id');
 
 					personalisedPeopleStorage.cache(
 						JSON.stringify(uniqueAnnotatedPeople),
 						key,
-						clientRes
+						clientRes,
+						uuid
 					);
 				})
 				.catch(error => {

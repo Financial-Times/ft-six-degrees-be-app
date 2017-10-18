@@ -1,11 +1,11 @@
 'use strict';
 
-const moment = require('moment'),
-	responder = require('../../api/common/responder'),
-	winston = require('../../winston-logger'),
-	jsonHandler = require('../../utils/json-handler'),
-	{ containsSameIds } = require('../../utils/storage'),
-	datesHandler = require('../../utils/dates-handler');
+const moment = require('moment');
+const responder = require('../../api/common/responder');
+const winston = require('../../winston-logger');
+const jsonHandler = require('../../utils/json-handler');
+const { containsSameIds } = require('../../utils/storage');
+const datesHandler = require('../../utils/dates-handler');
 
 class PeopleStorage {
 	constructor(description, parser, articlesStorage) {

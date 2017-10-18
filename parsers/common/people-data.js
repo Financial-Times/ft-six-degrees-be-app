@@ -18,7 +18,7 @@ class PeopleData {
 		this.peopleArticlesParser = peopleArticlesParser;
 	}
 
-	handle(people, articlesCallback, key) {
+	handle(people, articlesCallback, key, uuid) {
 		people.map(person => {
 			person.abbrName = getAbbreviatedName(person.prefLabel);
 			return person;
@@ -31,7 +31,7 @@ class PeopleData {
 
 		PeopleImagesParser.handle(people);
 
-		this.peopleArticlesParser.handle(people, articlesCallback, key);
+		this.peopleArticlesParser.handle(people, articlesCallback, key, uuid);
 	}
 }
 

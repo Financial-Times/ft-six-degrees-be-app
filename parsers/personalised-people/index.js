@@ -3,10 +3,10 @@
 const PeopleData = require('../common/people-data'),
 	personalisedPeopleArticlesParser = require('./articles');
 
-class MentionedPeopleParser extends PeopleData {
+class PersonalisedPeopleParser extends PeopleData {
 	constructor() {
 		super(personalisedPeopleArticlesParser);
 	}
 }
 
-module.exports = new MentionedPeopleParser();
+module.exports = new PersonalisedPeopleParser();
