@@ -9,7 +9,7 @@ const Poller = require('./poller');
 const Api = require('./api');
 const winston = require('./winston-logger');
 
-apicache.options({debug: true});
+apicache.options({ debug: true, statusCodes: { include: [200] } });
 const cache = apicache.middleware;
 
 app.listen(CONFIG.PORT, () => {
@@ -19,8 +19,9 @@ app.listen(CONFIG.PORT, () => {
 middlewares.configure(app);
 
 app.all('/api/:command', Api.handle);
-app.all('/api/:command/:key', cache('30 minutes'), Api.handle);
-app.all('/api/:command/:key/:uuid/:userId?', cache('20 minutes'), Api.handle);
+app.all('/api/:command/:key', Api.handle);
+app.all('/api/:command/:key/:uuid', Api.handle);
+app.all('/api/:command/:key/:uuid/:userId', cache('30 minutes'), Api.handle);
 app.get('/__health', Api.healthcheck);
 
 Poller.init();
