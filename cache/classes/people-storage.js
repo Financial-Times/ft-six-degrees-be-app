@@ -6,6 +6,7 @@ const winston = require('../../winston-logger');
 const jsonHandler = require('../../utils/json-handler');
 const { containsSameIds } = require('../../utils/storage');
 const datesHandler = require('../../utils/dates-handler');
+const orderBy = require('lodash/orderBy');
 
 class PeopleStorage {
 	constructor(description, parser, articlesStorage) {
@@ -34,6 +35,7 @@ class PeopleStorage {
 				}
 			});
 		});
+		this.storageParsed[key].people = orderBy(this.storageParsed[key].people, ['articles', 'prefLabel'], ['desc', 'asc']);
 
 		if (clientRes) {
 			responder.send(clientRes, {
