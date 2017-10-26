@@ -31,7 +31,7 @@ class PeopleImages {
 				.then(images => {
 					images.forEach((img, index) => {
 						if (img && img.url) {
-							people[index].img = img.url;
+							people[index]['img'] = img.url;
 						}
 					});
 				})
