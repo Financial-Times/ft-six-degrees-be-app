@@ -3,6 +3,7 @@
 const personalisedPeopleParser = require('../parsers/personalised-people/');
 const personalisedPeopleArticlesStorage = require('./personalised-people-articles-storage');
 const moment = require('moment');
+const orderBy = require('lodash/orderBy');
 const responder = require('../api/common/responder');
 const winston = require('../winston-logger');
 const jsonHandler = require('../utils/json-handler');
@@ -29,6 +30,7 @@ class PersonalisedPeopleStorage {
 				}
 			});
 		});
+		this.storageParsed[uuid][key].people = orderBy(this.storageParsed[uuid][key].people, ['articles', 'initials'], ['desc', 'asc']);
 
 		if (clientRes) {
 			responder.send(clientRes, {

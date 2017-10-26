@@ -35,7 +35,7 @@ class PeopleStorage {
 				}
 			});
 		});
-		this.storageParsed[key].people = orderBy(this.storageParsed[key].people, ['articles', 'prefLabel'], ['desc', 'asc']);
+		this.storageParsed[key].people = orderBy(this.storageParsed[key].people, ['articles', 'initials'], ['desc', 'asc']);
 
 		if (clientRes) {
 			responder.send(clientRes, {
