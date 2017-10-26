@@ -37,6 +37,8 @@ class EnrichedContent {
 									getAnnotationPredicate(annotation.predicate) !==
 									'hasAuthor' &&
 									getAnnotationPredicate(annotation.predicate) !==
+									'about' &&
+									getAnnotationPredicate(annotation.predicate) !==
 									'majorMentions'
 								) {
 									annotatedPeople.push({
