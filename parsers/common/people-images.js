@@ -27,7 +27,7 @@ class PeopleImages {
 			results = actions.length ? Promise.all(actions) : null;
 
 		if (results) {
-			results
+			return results
 				.then(images => {
 					images.forEach((img, index) => {
 						if (img && img.url) {
@@ -41,6 +41,7 @@ class PeopleImages {
 					);
 				});
 		}
+		return Promise.resolve();
 	}
 }
 

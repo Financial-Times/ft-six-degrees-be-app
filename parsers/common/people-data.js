@@ -29,9 +29,10 @@ class PeopleData {
 			return person;
 		});
 
-		PeopleImagesParser.handle(people);
-
-		this.peopleArticlesParser.handle(people, articlesCallback, key, uuid);
+		PeopleImagesParser.handle(people)
+			.then(() => {
+				this.peopleArticlesParser.handle(people, articlesCallback, key, uuid);
+			});
 	}
 }
 
