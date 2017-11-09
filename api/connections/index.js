@@ -1,13 +1,15 @@
 'use strict';
 
-const moment = require('moment'),
-	fetch = require('node-fetch'),
-	responder = require('../common/responder'),
-	connectionsStorage = require('../../cache/connections.storage'),
-	jsonHandler = require('../../utils/json-handler'),
-	datesHandler = require('../../utils/dates-handler'),
-	winston = require('../../winston-logger'),
-	CONFIG = require('../../config');
+const moment = require('moment');
+const fetch = require('node-fetch');
+const responder = require('../common/responder');
+const connectionsStorage = require('../../cache/connections.storage');
+const jsonHandler = require('../../utils/json-handler');
+const datesHandler = require('../../utils/dates-handler');
+const winston = require('../../winston-logger');
+const Uuid = require('../../utils/uuid');
+const peopleNames = require('../../utils/people-names');
+const CONFIG = require('../../config');
 
 function respond(response, data) {
 	responder.send(response, {
@@ -22,7 +24,7 @@ function getConnections(key, uuid) {
 		toDate = datesRange[1];
 
 	const url = `${CONFIG.URL.API
-		.SIX_DEGREES_HOST}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&limit=9&contentLimit=20&uuid=${uuid}&apiKey=${CONFIG
+		.SIX_DEGREES_HOST}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&contentLimit=20&uuid=${uuid}&apiKey=${CONFIG
 		.API_KEY.SIX_DEGREES}`;
 	return fetch(url).then(res => res.ok && res.json());
 }
@@ -51,7 +53,11 @@ function getNameInitials(prefLabel) {
 	return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 }
 
-function getAbbreviatedName(prefLabel) {
+function getAbbreviatedName(id, prefLabel) {
+	const nameItem = peopleNames.find(item => item.uuid === id);
+	if (nameItem) {
+		return nameItem.displayName;
+	}
 	const prefLabelArray = prefLabel.split(' '),
 		max = prefLabelArray.length;
 	return `${prefLabelArray[0]} ${prefLabelArray[max - 1]}`;
@@ -72,8 +78,9 @@ class Connections {
 						respond(res, []);
 					}
 					const connections = rawConnections.map(conn => {
+						const id = Uuid.extract(conn.person.id);
 						conn.person = Object.assign({}, conn.person, {
-							abbrName: getAbbreviatedName(conn.person.prefLabel),
+							abbrName: getAbbreviatedName(id, conn.person.prefLabel),
 							initials: getNameInitials(conn.person.prefLabel)
 						});
 						return conn;
