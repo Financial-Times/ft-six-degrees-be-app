@@ -49,7 +49,8 @@ class MentionedPeoplePoller {
 		// if data already stored, do not trigger new fetch for 24 hrs
 		if (!this.cached || !this.cached[today] || !this.cached[today][key]) {
 			this.cleanup(today);
-			fetch(`${url}&${addDateRange(key)}`)
+			const apiUrl = `${url}&${addDateRange(key)}`;
+			fetch(apiUrl)
 				.then(res => res.ok && res.text())
 				.then(response => {
 					store(response, key);
