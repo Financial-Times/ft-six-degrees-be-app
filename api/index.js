@@ -48,10 +48,6 @@ class Api {
 			responder.reject(response);
 		}
 	}
-
-	healthcheck(request, response) {
-		Health.check(request, response);
-	}
 }
 
 module.exports = new Api();
