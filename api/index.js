@@ -1,7 +1,6 @@
 'use strict';
 
 const responder = require('./common/responder'),
-	Health = require('../api/health'),
 	Test = require('../api/test'),
 	Connections = require('./connections'),
 	MentionedPeople = require('./mentioned-people'),
