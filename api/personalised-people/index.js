@@ -18,7 +18,7 @@ function getRecency(key) {
 }
 
 function getHistory(key, uuid, res) {
-	const url = `${CONFIG.URL.API.FT_RECOMMENDATIONS_USERS}${uuid}/history?limit=100&recency=${getRecency(key)}&apiKey=${CONFIG.API_KEY.FT_RECOMMENDATIONS}`;
+	const url = `${CONFIG.URL.API.FT_RECOMMENDATIONS_USERS}${uuid}/history?limit=50&recency=${getRecency(key)}&apiKey=${CONFIG.API_KEY.FT_RECOMMENDATIONS}`;
 	return fetch(url)
 		.then(resp => {
 			if (!resp.ok) {
