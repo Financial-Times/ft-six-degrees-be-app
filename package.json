@@ -18,6 +18,7 @@
 	"dependencies": {
 		"@financial-times/express-web-service": "^3.4.3",
 		"apicache": "^1.1.0",
+		"bluebird": "^3.5.1",
 		"cors": "^2.8.4",
 		"crypto": "^1.0.1",
 		"express": "^4.16.2",
