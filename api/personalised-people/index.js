@@ -26,7 +26,17 @@ function getHistory(key, uuid, res) {
 			}
 			return resp.json();
 		})
-		.then(history => EnrichedContent.getPeople(res, history.response, key, uuid))
+		.then(history => {
+			if (history.response.articles.length > 0) {
+				return history;
+			}
+			responder.send(res, {
+				status: 200,
+				data: []
+			});
+			return undefined;
+		})
+		.then(history => history && EnrichedContent.getPeople(res, history.response, key, uuid))
 		.catch(error => {
 			winston.logger.error(`[api-personalised-people] ${error}`);
 			responder.rejectBadGateway();
