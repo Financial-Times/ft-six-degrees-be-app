@@ -41,9 +41,7 @@ class Responder {
 				}
 				response.json(params.data);
 			} else {
-				response.writeHead(params.status, {
-					'Content-Type': 'text/plain'
-				});
+				response.status(params.status);
 				if (!nolog) {
 					winston.logger.error(
 						(params.description

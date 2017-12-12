@@ -22,7 +22,7 @@ function getHistory(key, uuid, res) {
 	return fetch(url)
 		.then(resp => {
 			if (!resp.ok) {
-				responder.rejectNotFound(resp);
+				responder.rejectNotFound(res);
 			}
 			return resp.json();
 		})
