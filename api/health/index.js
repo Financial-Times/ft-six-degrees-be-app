@@ -11,7 +11,7 @@ let lastUpdated;
 let lastResults;
 
 let checkInProgress = false;
-const check = () => {
+const check = function () {
 	if (checkInProgress) {
 		return checkInProgress;
 	}
@@ -19,7 +19,7 @@ const check = () => {
 	lastUpdated = new Date().getTime();
 
 	const checksToRun = [];
-	healthServices.forEach(healthService => {
+	healthServices.forEach(function (healthService) {
 		checksToRun.push(healthService.getHealth());
 	});
 
@@ -36,11 +36,12 @@ const check = () => {
 	return checkInProgress;
 };
 
-exports.getChecks = () => {
+exports.getChecks = function () {
 	if (lastResults && lastUpdated && (new Date().getTime() - lastUpdated < 60000)) {
 		return new Promise((resolve) => {
 			resolve(lastResults);
 		});
+	} else {
+		return check();
 	}
-	return check();
 };

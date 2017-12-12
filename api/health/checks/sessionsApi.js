@@ -25,16 +25,19 @@ exports.getHealth = () =>
 		})
 			.then(() => {
 				currentHealth.ok = true;
+				currentHealth.lastUpdated = new Date().toISOString();
 				resolve(_.omit(currentHealth, ['checkOutput']));
 			})
 			.catch(err => {
 				if (err && err.response && err.response.status === 404) {
 					currentHealth.ok = true;
+					currentHealth.lastUpdated = new Date().toISOString();
 					resolve(_.omit(currentHealth, ['checkOutput']));
 					return;
 				}
 
 				currentHealth.ok = false;
+				currentHealth.lastUpdated = new Date().toISOString();
 				currentHealth.checkOutput =
 					'Session API is unreachable. Error: ' +
 					(err && err.message ? err.message : '');
