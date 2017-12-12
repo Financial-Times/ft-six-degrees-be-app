@@ -3,6 +3,7 @@
 const fetch = require('node-fetch');
 const uniqBy = require('lodash/uniqBy');
 const winston = require('../../winston-logger');
+const responder = require('../../api/common/responder');
 const CONFIG = require('../../config');
 const personalisedPeopleStorage = require('../../cache/personalised-people-storage');
 
@@ -49,14 +50,20 @@ class EnrichedContent {
 							});
 						}
 					});
-					const uniqueAnnotatedPeople = uniqBy(annotatedPeople, 'id');
-
-					personalisedPeopleStorage.cache(
-						JSON.stringify(uniqueAnnotatedPeople),
-						key,
-						clientRes,
-						uuid
-					);
+					if (annotatedPeople.length > 0) {
+						const uniqueAnnotatedPeople = uniqBy(annotatedPeople, 'id');
+						personalisedPeopleStorage.cache(
+							JSON.stringify(uniqueAnnotatedPeople),
+							key,
+							clientRes,
+							uuid
+						);
+					} else {
+						responder.send(clientRes, {
+							status: 200,
+							data: []
+						});
+					}
 				})
 				.catch(error => {
 					winston.logger.error(

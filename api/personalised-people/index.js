@@ -29,12 +29,12 @@ function getHistory(key, uuid, res) {
 		.then(history => {
 			if (history.response.articles.length > 0) {
 				return history;
+			} else {
+				responder.send(res, {
+					status: 200,
+					data: []
+				});
 			}
-			responder.send(res, {
-				status: 200,
-				data: []
-			});
-			return undefined;
 		})
 		.then(history => history && EnrichedContent.getPeople(res, history.response, key, uuid))
 		.catch(error => {
