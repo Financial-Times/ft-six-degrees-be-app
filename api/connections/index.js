@@ -26,7 +26,12 @@ function getConnections(key, uuid) {
 	const url = `${CONFIG.URL.API
 		.SIX_DEGREES_HOST}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&contentLimit=20&uuid=${uuid}&apiKey=${CONFIG
 		.API_KEY.SIX_DEGREES}`;
-	return fetch(url).then(res => res.ok && res.json());
+	return fetch(url).then(res => {
+		if (res.ok) {
+			return res.json();
+		}
+		throw new Error(res.statusText);
+	});
 }
 
 function getImage(person) {
