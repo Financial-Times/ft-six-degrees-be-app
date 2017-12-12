@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 
 const healthServices = [
 	require('./checks/sixDegreesApi'),
@@ -11,6 +13,7 @@ let lastUpdated;
 let lastResults;
 
 let checkInProgress = false;
+const timeout = (result) => new Promise(resolve => setTimeout(() => resolve(result), 10000));
 const check = function () {
 	if (checkInProgress) {
 		return checkInProgress;
@@ -23,7 +26,7 @@ const check = function () {
 		checksToRun.push(healthService.getHealth());
 	});
 
-	checkInProgress = Promise.all(checksToRun).then((results) => {
+	checkInProgress = Promise.any([Promise.all(checksToRun), timeout(lastResults)]).then((results) => {
 		lastUpdated = new Date().getTime();
 		lastResults = results;
 
