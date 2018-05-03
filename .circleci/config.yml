@@ -14,6 +14,9 @@ jobs:
             chmod +x ./_scripts/push_to_staging.sh
             chmod +x ./_scripts/run_tests.sh
       - run:
+          name: Pull node modules
+          command: npm install
+      - run:
           name: Run tests
           command: sh ./_scripts/run_tests.sh
   deploy:
