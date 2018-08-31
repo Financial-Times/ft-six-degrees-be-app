@@ -23,28 +23,32 @@ function getConnections(key, uuid) {
 		fromDate = datesRange[0],
 		toDate = datesRange[1];
 
-	const url = `${CONFIG.URL.API
-		.SIX_DEGREES_HOST}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&contentLimit=20&uuid=${uuid}&apiKey=${CONFIG
-		.API_KEY.SIX_DEGREES}`;
-	return fetch(url).then(res => {
-		if (res.ok) {
-			return res.json();
-		}
-		throw new Error(res.statusText);
-	});
+	const url = `${
+		CONFIG.URL.API.SIX_DEGREES_HOST
+	}connectedPeople?minimumConnections=2&fromDate=${fromDate}&toDate=${toDate}&contentLimit=20&uuid=${uuid}&apiKey=${
+		CONFIG.API_KEY.SIX_DEGREES
+	}`;
+	return fetch(url)
+		.then(res => {
+			if (res.ok) {
+				return res.json();
+			}
+			throw new Error(res.statusText);
+		})
+		.then(connections => connections.filter(c => c.person.id !== `http://api.ft.com/things/${uuid}`));
 }
 
 function getImage(person) {
-	const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${person.abbrName}&prop=pageimages&format=json&pithumbsize=600`;
+	const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${
+		person.abbrName
+	}&prop=pageimages&format=json&pithumbsize=600`;
 	return fetch(url)
 		.then(res => res.json())
 		.then(body => {
 			let imgUrl;
 			if (body.query && body.query.pages) {
 				Object.keys(body.query.pages).forEach(key => {
-					imgUrl = body.query.pages[key].thumbnail
-						? body.query.pages[key].thumbnail.source
-						: null;
+					imgUrl = body.query.pages[key].thumbnail ? body.query.pages[key].thumbnail.source : null;
 				});
 			}
 			return {
@@ -91,9 +95,7 @@ class Connections {
 						return conn;
 					});
 					const actions =
-							connections && connections.length
-								? connections.map(conn => getImage(conn.person))
-								: [],
+							connections && connections.length ? connections.map(conn => getImage(conn.person)) : [],
 						results = actions.length ? Promise.all(actions) : null;
 
 					if (results) {
@@ -104,18 +106,11 @@ class Connections {
 										connections[index].person.img = img.url;
 									}
 								});
-								connectionsStorage.cache(
-									today,
-									uuid,
-									key,
-									JSON.stringify(connections)
-								);
+								connectionsStorage.cache(today, uuid, key, JSON.stringify(connections));
 								respond(res, connections);
 							})
 							.catch(error => {
-								winston.logger.error(
-									'[parsers-common-people-images]\n\n' + error
-								);
+								winston.logger.error('[parsers-common-people-images]\n\n' + error);
 							});
 					}
 				})
